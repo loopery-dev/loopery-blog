@@ -18,40 +18,20 @@
 
 Obsidian 볼트에서 `/publish-blog` 스킬을 실행하면 wiki 노트를 골라 이 저장소의 `src/content/blog/`로 변환·커밋합니다.
 
-## 📌 발행 예정 위키 주제 (Backlog)
+## ✅ 발행된 글
 
-`wiki/`에 정리는 됐지만 아직 블로그 글로 발행되지 않은 주제 목록입니다. 원본 노트의 frontmatter에 `blog_published: true`가 없으면 여기 포함됩니다 — `/publish-blog` 실행 시 후보로 뜹니다.
+`wiki/`의 주제 14개는 서로 겹치는 내용이 많아(같은 벤치마크·아키텍처를 여러 노트가 공유) 노트 단위 1:1이 아니라 **주제 클러스터 단위로 묶어서** 6개 글로 발행했습니다.
 
-### Concepts
-
-| 주제 | 요약 |
+| 글 | 묶은 원본 노트 |
 |---|---|
-| [Chain of Causation](../obsidian/wiki/concepts/Chain-of-Causation.md) | VLA가 관측과 주행 행동 사이의 인과 관계를 학습하도록 만든 구조화 추론 프레임워크·데이터셋 방법론 |
-| [Flow-Matching Trajectory Decoder](../obsidian/wiki/concepts/Flow-Matching-Trajectory-Decoder.md) | VLM 추론 결과를 조건으로 6.4초 미래 주행 궤적을 실시간 생성하는 연속 액션 생성기 |
-| [Full Self-Driving (FSD)](../obsidian/wiki/concepts/Full-Self-Driving.md) | 라이다·HD맵 없이 카메라만으로 인지-판단-제어를 단일 파이프라인으로 처리하는 테슬라의 E2E 자율주행 SW |
-| [Reasoning-Action Consistency RL](../obsidian/wiki/concepts/Reasoning-Action-Consistency-RL.md) | SFT된 VLA의 언어적 추론과 실제 제어 궤적 간 일관성을 강제하는 사후 강화학습 기법 |
-| [Unboxed Manufacturing Process](../obsidian/wiki/concepts/Unboxed-Manufacturing.md) | 컨베이어 벨트 방식을 대체하는 테슬라의 모듈형 병렬 차량 조립 패러다임 |
-| [VLA for Autonomous Driving](../obsidian/wiki/concepts/VLA-for-Autonomous-Driving.md) | 카메라·센서·자연어 지시를 통합해 추론과 제어 궤적을 동시에 생성하는 자율주행 비전-언어-행동 모델 |
+| [테슬라 기업 프로필](https://ryans-automation-log.vercel.app/blog/tesla/) | `entities/Tesla.md` |
+| [Tesla Ecosystem and Physical AI](https://ryans-automation-log.vercel.app/blog/tesla-ecosystem-and-physical-ai/) | `synthesis/Tesla-Ecosystem-and-Physical-AI.md` |
+| [왜 자율주행 AI는 '추론'을 시작했나](https://ryans-automation-log.vercel.app/blog/reasoning-centric-autonomous-driving/) | `synthesis/Reasoning-Centric-Autonomous-Driving.md`, `concepts/VLA-for-Autonomous-Driving.md`, `entities/NVIDIA.md` |
+| [Alpamayo-R1 해부](https://ryans-automation-log.vercel.app/blog/alpamayo-r1-deep-dive/) | `entities/Alpamayo-R1.md`, `entities/Cosmos-Reason.md`, `entities/AlpaSim.md`, `concepts/Chain-of-Causation.md`, `concepts/Flow-Matching-Trajectory-Decoder.md`, `concepts/Reasoning-Action-Consistency-RL.md` |
+| [FSD 두뇌를 물려받은 로봇들](https://ryans-automation-log.vercel.app/blog/fsd-cybercab-optimus-unboxed/) | `concepts/Full-Self-Driving.md`, `entities/Cybercab.md`, `entities/Tesla-Optimus.md`, `concepts/Unboxed-Manufacturing.md` |
+| [메가팩, AI 시대 전력망의 숨은 수혜자](https://ryans-automation-log.vercel.app/blog/megapack-ai-power-grid/) | `entities/Megapack.md` |
 
-### Entities
-
-| 주제 | 요약 |
-|---|---|
-| [AlpaSim](../obsidian/wiki/entities/AlpaSim.md) | NVIDIA의 3D 가우시안 스플래팅 기반 신경 렌더링 자율주행 시뮬레이터 |
-| [Alpamayo-R1 (AR1)](../obsidian/wiki/entities/Alpamayo-R1.md) | NVIDIA가 CES 2026에서 공개한 자율주행 특화 VLA 파운데이션 모델 |
-| [Cosmos-Reason](../obsidian/wiki/entities/Cosmos-Reason.md) | NVIDIA의 물리 AI(Physical AI)용 대형 비전-언어 모델(VLM) |
-| [Cybercab](../obsidian/wiki/entities/Cybercab.md) | 스티어링 휠 없는 테슬라의 로보택시 전용 자율주행 전기차 |
-| [Megapack](../obsidian/wiki/entities/Megapack.md) | 전력망·데이터센터용 테슬라의 대용량 배터리 에너지 저장 장치(BESS) |
-| [NVIDIA](../obsidian/wiki/entities/NVIDIA.md) | 자율주행·Physical AI 생태계 전반을 선도하는 AI 하드웨어·소프트웨어 기업 |
-| [Tesla Optimus](../obsidian/wiki/entities/Tesla-Optimus.md) | FSD 신경망 두뇌를 물리적 신체에 이식한 테슬라의 휴머노이드 로봇 |
-
-### Synthesis
-
-| 주제 | 요약 |
-|---|---|
-| [Reasoning-Centric Autonomous Driving](../obsidian/wiki/synthesis/Reasoning-Centric-Autonomous-Driving.md) | 모듈러 → E2E → 추론 중심으로 이어진 자율주행 패러다임 전환을 정리한 종합 리포트 |
-
-> ✅ 발행 완료: [Tesla Ecosystem and Physical AI](https://ryans-automation-log.vercel.app/blog/tesla-ecosystem-and-physical-ai/) · [Tesla 기업 프로필](https://ryans-automation-log.vercel.app/blog/tesla/)
+`wiki/`의 모든 주제가 현재 발행 완료 상태입니다. 새 노트가 추가되면 다시 `/publish-blog`로 후보를 스캔합니다 — 겹치는 내용이 많다면 이번처럼 클러스터로 묶어서 발행하는 걸 우선 검토합니다.
 
 ## ⚡ Quick Start
 
