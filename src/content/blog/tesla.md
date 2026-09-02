@@ -15,23 +15,20 @@ draft: false
 
 ## 4대 사업 축
 
-```text
-🧠 Tesla 생태계
-├── 🚗 자율주행 모빌리티
-│     ├─ 양산 전기차 (Model 3/Y/S/X, Semi, Cybertruck)
-│     ├─ FSD (Supervised)
-│     └─ Cybercab & Robotaxi
-├── ⚡ 에너지 & 그리드
-│     ├─ Megapack (산업용 배터리 저장)
-│     ├─ Powerwall (가정용 배터리 저장)
-│     └─ Virtual Power Plant (가상발전소)
-├── 🤖 Physical AI & 로보틱스
-│     └─ Tesla Optimus (휴머노이드 로봇)
-└── 🏗️ 수직 통합 인프라
-      ├─ 자체 AI 칩 & 데이터센터
-      ├─ 수퍼차저 네트워크 (V4 / NACS)
-      └─ 언박스드(Unboxed) 제조 혁신
-```
+- 🚗 **자율주행 모빌리티**
+  - 양산 전기차 (Model 3/Y/S/X, Semi, Cybertruck)
+  - FSD (Supervised)
+  - Cybercab & Robotaxi
+- ⚡ **에너지 & 그리드**
+  - Megapack (산업용 배터리 저장)
+  - Powerwall (가정용 배터리 저장)
+  - Virtual Power Plant (가상발전소)
+- 🤖 **Physical AI & 로보틱스**
+  - Tesla Optimus (휴머노이드 로봇)
+- 🏗️ **수직 통합 인프라**
+  - 자체 AI 칩 & 데이터센터
+  - 수퍼차저 네트워크 (V4 / NACS)
+  - 언박스드(Unboxed) 제조 혁신
 
 ### 1. 모빌리티 & 자율주행
 

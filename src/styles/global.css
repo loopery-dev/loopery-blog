@@ -46,19 +46,19 @@ h6 {
 	line-height: 1.2;
 }
 h1 {
-	font-size: 3.052em;
+	font-size: clamp(1.6em, 5vw, 2.2em);
 }
 h2 {
-	font-size: 2.441em;
+	font-size: clamp(1.35em, 4vw, 1.75em);
 }
 h3 {
-	font-size: 1.953em;
+	font-size: clamp(1.2em, 3.2vw, 1.45em);
 }
 h4 {
-	font-size: 1.563em;
+	font-size: clamp(1.1em, 2.6vw, 1.25em);
 }
 h5 {
-	font-size: 1.25em;
+	font-size: 1.1em;
 }
 strong,
 b {
@@ -99,9 +99,18 @@ code {
 pre {
 	padding: 1.5em;
 	border-radius: 8px;
+	overflow-x: auto;
+	max-width: 100%;
+	box-sizing: border-box;
 }
 pre > code {
 	all: unset;
+	white-space: pre;
+}
+table {
+	display: block;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
 }
 blockquote {
 	border-left: 4px solid var(--accent);
