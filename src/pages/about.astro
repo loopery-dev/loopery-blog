@@ -1,63 +1,37 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
 import Layout from '../layouts/BlogPost.astro';
 ---
 
 <Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
+	title="About"
+	description="라이언의 자동화 일지를 쓰는 이유와 운영 방식을 소개합니다."
+	pubDate={new Date('September 02 2026')}
 >
 	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
+		안녕하세요, 라이언입니다. <strong>2026년 9월 2일부터 Claude Code를 이용해 블로그 포스팅을
+		진행 중</strong>입니다. 업무와 일상 생활을 하면서 필요해서 찾아보고 익힌 지식들을 그때그때
+		흘려보내지 않고 차곡차곡 누적한 뒤, 그걸 정제해서 이 블로그에 쌓아나갈 예정입니다.
 	</p>
 
 	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
+		글을 쓰는 방식도 조금 독특합니다. 평소엔 <strong>Obsidian</strong>에 개인 위키 형태로 메모를
+		정리해두고, 그중 정리가 끝난 노트를 <strong>Claude Code</strong>가 골라 블로그 톤으로
+		재구성한 뒤 자동으로 발행합니다. 원본 노트는 GitHub에, 완성된 글은 Vercel을 통해 바로
+		배포되는 구조라, 제가 하는 일은 지식을 정리해 위키에 남기는 것과 발행 여부를 확인하는
+		것뿐입니다. 이 파이프라인을 만들어가는 과정 자체도 종종 블로그 소재가 됩니다.
 	</p>
 
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
+	<p>주로 다루는 주제는 이렇습니다.</p>
+	<ul>
+		<li><strong>AI 에이전트 자동화</strong> — Claude Code로 프로젝트를 설계·빌드·배포하며 겪은 과정</li>
+		<li><strong>알고리즘 트레이딩</strong> — 자동매매 봇을 설계하고 검증해나가는 기록</li>
+		<li><strong>Physical AI & 자율주행</strong> — Tesla, NVIDIA 등 관심 있게 지켜보는 기술 트렌드 정리</li>
+		<li><strong>지식 자동 발행 파이프라인</strong> — 메모가 글이 되기까지의 도구와 워크플로우</li>
+	</ul>
 
 	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
-
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
+		거창한 계획보다는, 필요해서 공부한 것들을 남겨두고 나중에 저 스스로도 다시 꺼내볼 수 있게
+		만드는 게 이 블로그의 첫 번째 목적입니다. 그 기록이 비슷한 걸 찾고 있는 누군가에게도 도움이
+		된다면 더 좋겠습니다.
 	</p>
 </Layout>
