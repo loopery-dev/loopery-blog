@@ -44,7 +44,6 @@ Obsidian 볼트에서 `/publish-blog` 스킬을 실행하면 wiki 노트를 골�
 | [Megapack](../obsidian/wiki/entities/Megapack.md) | 전력망·데이터센터용 테슬라의 대용량 배터리 에너지 저장 장치(BESS) |
 | [NVIDIA](../obsidian/wiki/entities/NVIDIA.md) | 자율주행·Physical AI 생태계 전반을 선도하는 AI 하드웨어·소프트웨어 기업 |
 | [Tesla Optimus](../obsidian/wiki/entities/Tesla-Optimus.md) | FSD 신경망 두뇌를 물리적 신체에 이식한 테슬라의 휴머노이드 로봇 |
-| [Tesla](../obsidian/wiki/entities/Tesla.md) | EV·자율주행·에너지저장·로보틱스를 아우르는 Physical AI 선도 기업 |
 
 ### Synthesis
 
@@ -52,7 +51,7 @@ Obsidian 볼트에서 `/publish-blog` 스킬을 실행하면 wiki 노트를 골�
 |---|---|
 | [Reasoning-Centric Autonomous Driving](../obsidian/wiki/synthesis/Reasoning-Centric-Autonomous-Driving.md) | 모듈러 → E2E → 추론 중심으로 이어진 자율주행 패러다임 전환을 정리한 종합 리포트 |
 
-> ✅ 발행 완료: [Tesla Ecosystem and Physical AI](https://ryans-automation-log.vercel.app/blog/tesla-ecosystem-and-physical-ai/)
+> ✅ 발행 완료: [Tesla Ecosystem and Physical AI](https://ryans-automation-log.vercel.app/blog/tesla-ecosystem-and-physical-ai/) · [Tesla 기업 프로필](https://ryans-automation-log.vercel.app/blog/tesla/)
 
 ## ⚡ Quick Start
 
