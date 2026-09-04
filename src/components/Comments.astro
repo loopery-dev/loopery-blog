@@ -1,38 +1,29 @@
 ---
-// giscus(GitHub Discussions 기반) 댓글 위젯. giscus.app에서 발급받은 값을
-// Vercel 프로젝트의 Environment Variables에 PUBLIC_GISCUS_* 로 등록하면
-// 코드 변경 없이 켜진다. 값이 비어 있으면 아무것도 렌더링하지 않는다.
-const repo = import.meta.env.PUBLIC_GISCUS_REPO;
-const repoId = import.meta.env.PUBLIC_GISCUS_REPO_ID;
-const category = import.meta.env.PUBLIC_GISCUS_CATEGORY;
-const categoryId = import.meta.env.PUBLIC_GISCUS_CATEGORY_ID;
+// giscus(GitHub Discussions 기반) 댓글 위젯. 설정값은 src/giscus.config.ts 참고.
+import { GISCUS_CONFIG } from '../giscus.config';
 
-const isConfigured = Boolean(repo && repoId && category && categoryId);
+const { repo, repoId, category, categoryId } = GISCUS_CONFIG;
 ---
 
-{
-	isConfigured && (
-		<section class="comments">
-			<h2>댓글</h2>
-			<script
-				src="https://giscus.app/client.js"
-				data-repo={repo}
-				data-repo-id={repoId}
-				data-category={category}
-				data-category-id={categoryId}
-				data-mapping="pathname"
-				data-strict="0"
-				data-reactions-enabled="1"
-				data-emit-metadata="0"
-				data-input-position="bottom"
-				data-theme="preferred_color_scheme"
-				data-lang="ko"
-				crossorigin="anonymous"
-				async
-			/>
-		</section>
-	)
-}
+<section class="comments">
+	<h2>댓글</h2>
+	<script
+		src="https://giscus.app/client.js"
+		data-repo={repo}
+		data-repo-id={repoId}
+		data-category={category}
+		data-category-id={categoryId}
+		data-mapping="pathname"
+		data-strict="0"
+		data-reactions-enabled="1"
+		data-emit-metadata="0"
+		data-input-position="top"
+		data-theme="preferred_color_scheme"
+		data-lang="ko"
+		crossorigin="anonymous"
+		async
+	/>
+</section>
 
 <style>
 	.comments {

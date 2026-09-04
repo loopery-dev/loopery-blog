@@ -7,12 +7,6 @@ interface ImportMetaEnv {
 	readonly KV_REST_API_TOKEN?: string;
 	readonly UPSTASH_REDIS_REST_URL?: string;
 	readonly UPSTASH_REDIS_REST_TOKEN?: string;
-
-	// 댓글 — giscus.app에서 발급되는 값 (PUBLIC_ 접두사라 클라이언트에도 노출됨, 전부 비민감 정보)
-	readonly PUBLIC_GISCUS_REPO?: string;
-	readonly PUBLIC_GISCUS_REPO_ID?: string;
-	readonly PUBLIC_GISCUS_CATEGORY?: string;
-	readonly PUBLIC_GISCUS_CATEGORY_ID?: string;
 }
 
 interface ImportMeta {
