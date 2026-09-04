@@ -2,6 +2,7 @@
 title: "테슬라는 왜 '자동차 회사'가 아닌가 — Physical AI 플랫폼으로의 전환"
 description: "2025년 테슬라 임팩트 리포트를 바탕으로 모빌리티·에너지·로보틱스·AI가 하나의 플라이휠로 맞물리는 구조를 정리했다. 왜 테슬라를 EV 회사로만 보면 놓치는 게 많은지 살펴본다."
 pubDate: 2026-09-03
+category: "physical-ai"
 tags: ["Tesla", "Physical AI", "자율주행", "에너지저장"]
 lang: "kr"
 draft: false

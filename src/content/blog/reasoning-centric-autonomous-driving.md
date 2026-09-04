@@ -2,6 +2,7 @@
 title: "왜 자율주행 AI는 '추론'을 시작했나"
 description: "모듈러 방식에서 엔드투엔드를 거쳐 '추론 중심 자율주행'으로 넘어가는 패러다임 전환을 정리했다. NVIDIA가 왜 이 흐름의 중심에 있는지도 함께 짚는다."
 pubDate: 2026-09-03
+category: "physical-ai"
 tags: ["자율주행", "VLA", "NVIDIA", "Physical AI"]
 lang: "kr"
 draft: false

@@ -1,0 +1,39 @@
+---
+import { getCategory } from '../categories';
+
+interface Props {
+	category: string;
+}
+
+const { category } = Astro.props;
+const meta = getCategory(category);
+---
+
+{
+	meta && (
+		<a class="category-badge" href={`/blog/category/${meta.slug}/`}>
+			<span aria-hidden="true">{meta.icon}</span>
+			{meta.label}
+		</a>
+	)
+}
+
+<style>
+	.category-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35em;
+		font-size: 0.8em;
+		font-weight: 700;
+		color: var(--accent);
+		background: rgba(35, 55, 255, 0.08);
+		padding: 0.3em 0.8em;
+		border-radius: 999px;
+		text-decoration: none;
+		transition: background 0.2s ease;
+	}
+	.category-badge:hover {
+		background: rgba(35, 55, 255, 0.16);
+		color: var(--accent);
+	}
+</style>

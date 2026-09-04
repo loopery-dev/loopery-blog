@@ -2,14 +2,16 @@
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
+import CategoryBadge from '../../components/CategoryBadge.astro';
 import Footer from '../../components/Footer.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Header from '../../components/Header.astro';
+import { CATEGORIES } from '../../categories';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const posts = (await getCollection('blog'))
+	.filter((post) => !post.data.draft)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
 <!doctype html>
@@ -19,6 +21,30 @@ const posts = (await getCollection('blog')).sort(
 		<style>
 			main {
 				width: 960px;
+			}
+			.category-filter {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.6em;
+				margin-bottom: 2em;
+			}
+			.category-filter a {
+				font-size: 0.85em;
+				font-weight: 700;
+				color: rgb(var(--gray-dark));
+				background: rgb(var(--gray-light));
+				padding: 0.4em 0.9em;
+				border-radius: 999px;
+				text-decoration: none;
+				transition: background 0.2s ease;
+			}
+			.category-filter a:hover {
+				background: rgba(35, 55, 255, 0.16);
+				color: var(--accent);
+			}
+			.card-category {
+				display: block;
+				margin-bottom: 0.5rem;
 			}
 			ul {
 				display: flex;
@@ -72,11 +98,23 @@ const posts = (await getCollection('blog')).sort(
 	<body>
 		<Header />
 		<main>
+			<nav class="category-filter">
+				{
+					CATEGORIES.map((c) => (
+						<a href={`/blog/category/${c.slug}/`}>
+							{c.icon} {c.label}
+						</a>
+					))
+				}
+			</nav>
 			<section>
 				<ul>
 					{
 						posts.map((post) => (
 							<li>
+								<div class="card-category">
+									<CategoryBadge category={post.data.category} />
+								</div>
 								<a href={`/blog/${post.id}/`}>
 									{post.data.heroImage && (
 										<Image width={720} height={360} src={post.data.heroImage} alt="" />

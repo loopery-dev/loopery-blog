@@ -2,6 +2,7 @@
 title: "테슬라 기업 프로필 — EV 회사가 아니라 4개의 사업을 가진 회사"
 description: "테슬라를 모빌리티·에너지·로보틱스·AI 인프라라는 4대 축으로 나눠 정리했다. 2025년 실적 지표까지 함께 훑어보며 이 회사를 어떻게 읽어야 하는지 짚어본다."
 pubDate: 2026-09-03
+category: "physical-ai"
 tags: ["Tesla", "전기차", "Physical AI", "로보틱스", "에너지저장"]
 lang: "kr"
 draft: false

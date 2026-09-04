@@ -2,6 +2,7 @@
 title: "20대엔 ISA, 40대엔 연금저축 — 나이 들수록 계좌를 갈아타야 하는 이유"
 description: "연금저축·IRP·ISA·일반계좌·CMA, 5개 계좌는 세제 혜택과 자금 묶임 정도가 완전히 다르다. 20대부터 50대 이후까지 연령대별로 어떤 계좌에 힘을 실어야 하는지 정리했다."
 pubDate: 2026-09-04
+category: "personal-finance"
 tags: ["재테크", "절세", "연금저축", "ISA", "자산배분"]
 lang: "kr"
 draft: false

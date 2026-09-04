@@ -2,6 +2,7 @@
 title: "메가팩, AI 시대 전력망의 숨은 수혜자"
 description: "AI 데이터센터發 전력 수요 폭증 속에서 테슬라의 대용량 배터리 메가팩이 전력망의 병목을 어떻게 풀어주고 있는지 정리했다."
 pubDate: 2026-09-03
+category: "physical-ai"
 tags: ["Tesla", "Megapack", "에너지저장", "AI인프라"]
 lang: "kr"
 draft: false

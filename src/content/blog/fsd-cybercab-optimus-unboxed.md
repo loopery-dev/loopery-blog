@@ -2,6 +2,7 @@
 title: "FSD 두뇌를 물려받은 로봇들 — Cybercab과 Optimus"
 description: "테슬라의 자율주행 신경망 FSD가 로보택시(Cybercab)와 휴머노이드(Optimus)로 어떻게 이식되는지, 그리고 이 둘을 가능하게 만든 언박스드 제조 혁신까지 정리했다."
 pubDate: 2026-09-03
+category: "physical-ai"
 tags: ["Tesla", "Cybercab", "로보틱스", "제조혁신"]
 lang: "kr"
 draft: false

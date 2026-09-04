@@ -2,6 +2,7 @@
 title: "Alpamayo-R1 해부: 인과 추론에서 8.75ms 궤적까지"
 description: "NVIDIA Alpamayo-R1이 인과 추론 데이터셋, 실시간 궤적 디코더, 강화학습 정렬을 어떻게 하나로 엮었는지 파이프라인 단계별로 뜯어봤다."
 pubDate: 2026-09-03
+category: "physical-ai"
 tags: ["Alpamayo-R1", "NVIDIA", "VLA", "자율주행", "강화학습"]
 lang: "kr"
 draft: false
