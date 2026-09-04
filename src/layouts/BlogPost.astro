@@ -8,17 +8,42 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import ViewCounter from '../components/ViewCounter.astro';
+import { t } from '../i18n/ui';
+import { getAltPath, type Lang } from '../i18n/utils';
 
 // slug는 post.id를 그대로 넘겨받는다 (조회수 카운터 키 / giscus 매핑에 사용).
 // about.astro처럼 콘텐츠 컬렉션 밖에서 이 레이아웃을 쓰는 페이지는 slug가 없을 수 있어 optional.
-type Props = CollectionEntry<'blog'>['data'] & { slug?: string };
+type Props = CollectionEntry<'blog'>['data'] & {
+	slug?: string;
+	lang?: Lang;
+	hasTranslation?: boolean;
+};
 
-const { title, description, pubDate, updatedDate, heroImage, category, slug } = Astro.props;
+const {
+	title,
+	description,
+	pubDate,
+	updatedDate,
+	heroImage,
+	category,
+	slug,
+	lang = 'ko',
+	hasTranslation = true,
+} = Astro.props;
+
+const altHref = hasTranslation ? getAltPath(Astro.url.pathname, lang) : undefined;
+// 조회수는 언어별 페이지가 각자 다른 콘텐츠라 언어 프리픽스를 붙여 별도로 센다.
+const viewSlug = slug && (lang === 'en' ? `en-${slug}` : slug);
 ---
 
-<html lang="ko">
+<html lang={lang}>
 	<head>
-		<BaseHead title={title} description={description} />
+		<BaseHead
+			title={title}
+			description={description}
+			lang={lang}
+			hasTranslation={hasTranslation}
+		/>
 		<script
 			type="application/ld+json"
 			set:html={JSON.stringify({
@@ -28,7 +53,8 @@ const { title, description, pubDate, updatedDate, heroImage, category, slug } = 
 				description,
 				datePublished: pubDate.toISOString(),
 				...(updatedDate && { dateModified: updatedDate.toISOString() }),
-				author: { '@type': 'Person', name: '라이언' },
+				author: { '@type': 'Person', name: 'Ryan' },
+				inLanguage: lang,
 			})}
 		/>
 		<style>
@@ -80,7 +106,13 @@ const { title, description, pubDate, updatedDate, heroImage, category, slug } = 
 	</head>
 
 	<body>
-		<Header />
+		<Header
+			lang={lang}
+			homeHref={lang === 'en' ? '/en' : '/'}
+			blogHref={lang === 'en' ? '/en/blog' : '/blog'}
+			aboutHref={lang === 'en' ? '/en/about' : '/about'}
+			altHref={altHref}
+		/>
 		<main>
 			<article>
 				<div class="hero-image">
@@ -91,7 +123,7 @@ const { title, description, pubDate, updatedDate, heroImage, category, slug } = 
 						{
 							category && (
 								<div class="category">
-									<CategoryBadge category={category} />
+									<CategoryBadge category={category} lang={lang} />
 								</div>
 							)
 						}
@@ -100,17 +132,17 @@ const { title, description, pubDate, updatedDate, heroImage, category, slug } = 
 							{
 								updatedDate && (
 									<div class="last-updated-on">
-										Last updated on <FormattedDate date={updatedDate} />
+										{t(lang).lastUpdatedOn} <FormattedDate date={updatedDate} />
 									</div>
 								)
 							}
-							{slug && <ViewCounter slug={slug} />}
+							{viewSlug && <ViewCounter slug={viewSlug} />}
 						</div>
 						<h1>{title}</h1>
 						<hr />
 					</div>
 					<slot />
-					{slug && <Comments />}
+					{slug && <Comments lang={lang} />}
 				</div>
 			</article>
 		</main>

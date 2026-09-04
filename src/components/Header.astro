@@ -1,15 +1,29 @@
 ---
 import { SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import type { Lang } from '../i18n/utils';
+
+interface Props {
+	lang?: Lang;
+	homeHref?: string;
+	blogHref?: string;
+	aboutHref?: string;
+	altHref?: string;
+}
+
+const { lang = 'ko', homeHref = '/', blogHref = '/blog', aboutHref = '/about', altHref } =
+	Astro.props;
 ---
 
 <header>
 	<nav>
-		<h2><a href="/">{SITE_TITLE}</a></h2>
+		<h2><a href={homeHref}>{SITE_TITLE}</a></h2>
 		<div class="internal-links">
-			<HeaderLink href="/">Home</HeaderLink>
-			<HeaderLink href="/blog">Blog</HeaderLink>
-			<HeaderLink href="/about">About</HeaderLink>
+			<HeaderLink href={homeHref}>Home</HeaderLink>
+			<HeaderLink href={blogHref}>Blog</HeaderLink>
+			<HeaderLink href={aboutHref}>About</HeaderLink>
+			{altHref && <LanguageSwitcher lang={lang} altHref={altHref} />}
 		</div>
 		<div class="social-links">
 			<a href="https://m.webtoo.ls/@astro" target="_blank">

@@ -1,13 +1,15 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import FormattedDate from '../components/FormattedDate.astro';
-import Header from '../components/Header.astro';
-import { CATEGORIES } from '../categories';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Header from '../../components/Header.astro';
+import { CATEGORIES } from '../../categories';
+import { t } from '../../i18n/ui';
 
-const posts = (await getCollection('blog'))
+const ui = t('en');
+
+const posts = (await getCollection('blogEn'))
 	.filter((post) => !post.data.draft)
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 	.slice(0, 3);
@@ -16,9 +18,9 @@ const stack = ['Claude Code', 'Obsidian', 'Astro', 'Vercel', 'GitHub'];
 ---
 
 <!doctype html>
-<html lang="ko">
+<html lang="en">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} lang="ko" hasTranslation={true} />
+		<BaseHead title={ui.siteTitle} description={ui.siteDescription} lang="en" hasTranslation={true} />
 		<style>
 			.hero {
 				text-align: center;
@@ -170,30 +172,27 @@ const stack = ['Claude Code', 'Obsidian', 'Astro', 'Vercel', 'GitHub'];
 		</style>
 	</head>
 	<body>
-		<Header lang="ko" altHref="/en" />
+		<Header lang="en" homeHref="/en" blogHref="/en/blog" aboutHref="/en/about" altHref="/" />
 		<main>
 			<section class="hero">
 				<span class="eyebrow">RYAN'S AUTOMATION LOG</span>
-				<h1>🚀 라이언의 자동화 일지</h1>
-				<p class="tagline">
-					Claude Code 같은 AI 에이전트로 자동매매 시스템을 만들고, Obsidian에 쌓은 지식을
-					자동으로 블로그까지 발행하는 1인 개발 여정을 기록합니다.
-				</p>
-				<a class="cta" href="/blog">최신 글 보러가기 →</a>
+				<h1>🚀 Ryan's Automation Log</h1>
+				<p class="tagline">{ui.heroTagline}</p>
+				<a class="cta" href="/en/blog">{ui.heroCta}</a>
 				<div class="stack">
 					{stack.map((s) => <span>{s}</span>)}
 				</div>
 			</section>
 
 			<section class="topics">
-				<h2>이 블로그에서 다루는 것들</h2>
+				<h2>{ui.topicsTitle}</h2>
 				<div class="topic-grid">
 					{
 						CATEGORIES.map((c) => (
-							<a class="topic-card" href={`/blog/category/${c.slug}/`}>
+							<a class="topic-card" href={`/en/blog/category/${c.slug}/`}>
 								<span class="icon">{c.icon}</span>
-								<h3>{c.label}</h3>
-								<p>{c.desc}</p>
+								<h3>{c.label_en}</h3>
+								<p>{c.desc_en}</p>
 							</a>
 						))
 					}
@@ -203,16 +202,18 @@ const stack = ['Claude Code', 'Obsidian', 'Astro', 'Vercel', 'GitHub'];
 			{
 				posts.length > 0 && (
 					<section class="recent">
-						<h2>최근 글</h2>
+						<h2>{ui.recentPosts}</h2>
 						{posts.map((post) => (
-							<a class="post-row" href={`/blog/${post.id}/`}>
+							<a class="post-row" href={`/en/blog/${post.id}/`}>
 								<span class="post-title">{post.data.title}</span>
 								<span class="post-date">
 									<FormattedDate date={post.data.pubDate} />
 								</span>
 							</a>
 						))}
-						<a class="more" href="/blog">전체 글 보기 →</a>
+						<a class="more" href="/en/blog">
+							{ui.viewAllPosts}
+						</a>
 					</section>
 				)
 			}

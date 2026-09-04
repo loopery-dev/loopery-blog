@@ -15,6 +15,13 @@ export default defineConfig({
 	// `export const prerender = false` to run as a Vercel serverless function
 	// (needed for the live view counter). The adapter is what makes that
 	// per-route opt-out possible.
+	//
+	// NOTE: Astro/Vercel middleware does NOT run in front of prerendered
+	// static pages (Vercel serves those straight from the filesystem and
+	// never invokes the render function or edge middleware) — confirmed
+	// against Astro's own docs. So the language auto-redirect is implemented
+	// client-side instead (see the inline script in BaseHead.astro), not via
+	// src/middleware.ts.
 	adapter: vercel(),
 	integrations: [mdx(), sitemap()],
 	fonts: [

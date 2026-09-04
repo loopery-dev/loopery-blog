@@ -5,22 +5,90 @@ import '../styles/global.css';
 import type { ImageMetadata } from 'astro';
 import FallbackImage from '../assets/blog-placeholder-1.jpg';
 import { SITE_TITLE } from '../consts';
+import { getAltPath, type Lang } from '../i18n/utils';
 import { Font } from 'astro:assets';
 
 interface Props {
 	title: string;
 	description: string;
 	image?: ImageMetadata;
+	// 이 페이지의 언어와, 다른 언어 버전이 실제로 존재하는지. hasTranslation이
+	// false면(예: 아직 번역 안 된 글) hreflang 태그를 생략한다.
+	lang?: Lang;
+	hasTranslation?: boolean;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = FallbackImage } = Astro.props;
+const {
+	title,
+	description,
+	image = FallbackImage,
+	lang = 'ko',
+	hasTranslation = true,
+} = Astro.props;
+
+const altURL = hasTranslation
+	? new URL(getAltPath(Astro.url.pathname, lang), Astro.site)
+	: undefined;
+const koURL = lang === 'ko' ? canonicalURL : altURL;
+const enURL = lang === 'en' ? canonicalURL : altURL;
 ---
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+<!--
+  Language auto-redirect. This site is fully static (Vercel serves prerendered
+  HTML straight from the filesystem), so there is no server/middleware layer
+  that can inspect a real request's Accept-Language header before responding —
+  see astro.config.mjs for why. This inline, synchronous, head-first script is
+  the static-site equivalent: on a visitor's very first page load (no
+  pref_lang cookie yet), it checks navigator.language/navigator.languages
+  (the browser's own language setting) and redirects once to /en if English
+  is clearly preferred over Korean. After that first visit the cookie is all
+  that's consulted — this never redirects again on its own, so the manual
+  language-switcher link always wins.
+-->
+<script is:inline>
+	(function () {
+		try {
+			var path = location.pathname;
+			var isEn = path === '/en' || path.indexOf('/en/') === 0;
+			var match = document.cookie.match(/(?:^|; )pref_lang=([^;]*)/);
+			var pref = match ? match[1] : null;
+
+			function setCookie(value) {
+				document.cookie =
+					'pref_lang=' + value + '; path=/; max-age=' + 60 * 60 * 24 * 365 + '; samesite=lax';
+			}
+
+			if (!pref) {
+				var langs = navigator.languages && navigator.languages.length
+					? navigator.languages
+					: [navigator.language || ''];
+				var koQ = -1;
+				var enQ = -1;
+				for (var i = 0; i < langs.length; i++) {
+					var l = String(langs[i]).toLowerCase();
+					var q = 1 - i * 0.01; // navigator.languages is already priority-ordered
+					if (koQ < 0 && l.indexOf('ko') === 0) koQ = q;
+					if (enQ < 0 && l.indexOf('en') === 0) enQ = q;
+				}
+				if (!isEn && enQ > koQ) {
+					setCookie('en');
+					location.replace('/en' + path + location.search);
+					return;
+				}
+				setCookie(isEn ? 'en' : 'ko');
+			}
+		} catch (e) {
+			// Never let a language-detection failure break the page.
+		}
+	})();
+</script>
+
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="icon" href="/favicon.ico" />
 <link rel="sitemap" href="/sitemap-index.xml" />
@@ -36,6 +104,11 @@ const { title, description, image = FallbackImage } = Astro.props;
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
+
+<!-- Language alternates -->
+{koURL && <link rel="alternate" hreflang="ko" href={koURL} />}
+{enURL && <link rel="alternate" hreflang="en" href={enURL} />}
+{koURL && <link rel="alternate" hreflang="x-default" href={koURL} />}
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>

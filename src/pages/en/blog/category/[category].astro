@@ -1,15 +1,17 @@
 ---
 import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
-import BaseHead from '../../../components/BaseHead.astro';
-import Footer from '../../../components/Footer.astro';
-import FormattedDate from '../../../components/FormattedDate.astro';
-import Header from '../../../components/Header.astro';
-import { CATEGORIES } from '../../../categories';
-import { SITE_TITLE } from '../../../consts';
+import BaseHead from '../../../../components/BaseHead.astro';
+import Footer from '../../../../components/Footer.astro';
+import FormattedDate from '../../../../components/FormattedDate.astro';
+import Header from '../../../../components/Header.astro';
+import { CATEGORIES } from '../../../../categories';
+import { t } from '../../../../i18n/ui';
+
+const ui = t('en');
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
+	const posts = await getCollection('blogEn');
 	return CATEGORIES.map((c) => ({
 		params: { category: c.slug },
 		props: {
@@ -25,12 +27,12 @@ const { category, posts } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="ko">
+<html lang="en">
 	<head>
 		<BaseHead
-			title={`${category.label} | ${SITE_TITLE}`}
-			description={category.desc}
-			lang="ko"
+			title={`${category.label_en} | ${ui.siteTitle}`}
+			description={category.desc_en}
+			lang="en"
 			hasTranslation={true}
 		/>
 		<style>
@@ -106,23 +108,31 @@ const { category, posts } = Astro.props;
 		</style>
 	</head>
 	<body>
-		<Header lang="ko" altHref={`/en/blog/category/${category.slug}`} />
+		<Header
+			lang="en"
+			homeHref="/en"
+			blogHref="/en/blog"
+			aboutHref="/en/about"
+			altHref={`/blog/category/${category.slug}`}
+		/>
 		<main>
-			<a class="back-link" href="/blog">← 전체 글 보기</a>
+			<a class="back-link" href="/en/blog">
+				{ui.backToAll}
+			</a>
 			<div class="category-header">
 				<span class="icon" aria-hidden="true">{category.icon}</span>
-				<h1>{category.label}</h1>
-				<p>{category.desc}</p>
+				<h1>{category.label_en}</h1>
+				<p>{category.desc_en}</p>
 			</div>
 			<section>
 				{
 					posts.length === 0 ? (
-						<p class="empty">아직 이 카테고리에 발행된 글이 없습니다.</p>
+						<p class="empty">{ui.emptyCategory}</p>
 					) : (
 						<ul>
 							{posts.map((post) => (
 								<li>
-									<a href={`/blog/${post.id}/`}>
+									<a href={`/en/blog/${post.id}/`}>
 										{post.data.heroImage && (
 											<Image width={720} height={360} src={post.data.heroImage} alt="" />
 										)}

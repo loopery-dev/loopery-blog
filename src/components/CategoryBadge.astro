@@ -1,19 +1,22 @@
 ---
 import { getCategory } from '../categories';
+import type { Lang } from '../i18n/utils';
 
 interface Props {
 	category: string;
+	lang?: Lang;
 }
 
-const { category } = Astro.props;
+const { category, lang = 'ko' } = Astro.props;
 const meta = getCategory(category);
+const prefix = lang === 'en' ? '/en' : '';
 ---
 
 {
 	meta && (
-		<a class="category-badge" href={`/blog/category/${meta.slug}/`}>
+		<a class="category-badge" href={`${prefix}/blog/category/${meta.slug}/`}>
 			<span aria-hidden="true">{meta.icon}</span>
-			{meta.label}
+			{lang === 'en' ? meta.label_en : meta.label}
 		</a>
 	)
 }

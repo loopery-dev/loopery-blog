@@ -1,0 +1,39 @@
+---
+import Layout from '../../layouts/BlogPost.astro';
+---
+
+<Layout
+	title="About"
+	description="Why I write Ryan's Automation Log and how it's built."
+	pubDate={new Date('September 02 2026')}
+	lang="en"
+	hasTranslation={true}
+>
+	<p>
+		Hi, I'm Ryan. <strong>I've been posting to this blog with Claude Code since September 2, 2026.</strong>
+		Instead of letting the things I learn while working and living day to day just slip away, I
+		collect them, refine them, and pile them up here.
+	</p>
+
+	<p>
+		The way I write is a bit unusual, too. I normally keep notes in <strong>Obsidian</strong> as a
+		personal wiki, and <strong>Claude Code</strong> picks out the notes that are ready, reworks them
+		into blog-post tone, and publishes them automatically. The source notes live in a private
+		Obsidian vault; the finished posts deploy straight through Vercel. All I really do is keep the
+		wiki organized and decide what's ready to ship — and the pipeline itself often becomes a topic
+		here, too.
+	</p>
+
+	<p>Here's what I mostly write about:</p>
+	<ul>
+		<li><strong>AI agent automation</strong> — designing, building, and shipping projects with Claude Code</li>
+		<li><strong>Algorithmic trading</strong> — building and validating auto-trading bots</li>
+		<li><strong>Physical AI & autonomous driving</strong> — Tesla, NVIDIA, and other trends I follow closely</li>
+		<li><strong>Knowledge auto-publishing pipeline</strong> — the tools and workflow behind turning notes into posts</li>
+	</ul>
+
+	<p>
+		This isn't a grand plan — the first goal is just to keep what I've learned so I can find it
+		again myself later. If it happens to help someone else looking for the same thing, even better.
+	</p>
+</Layout>
