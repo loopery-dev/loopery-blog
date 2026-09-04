@@ -60,8 +60,27 @@ draft: false
 ---
 ```
 
+## 📊 조회수 · 💬 댓글 설정
+
+둘 다 코드는 이미 들어가 있고, 아래 값을 **Vercel 프로젝트의 Settings → Environment Variables**에
+등록하면 다음 배포부터 바로 켜진다(코드 수정·재배포 불필요). 값을 비워두면 두 기능 다 자동으로
+숨겨진다 — 로컬 `.env`에는 절대 실제 값을 넣지 말고 `.env.example`만 참고할 것.
+
+**조회수** (Upstash Redis 기반 서버리스 카운터, `src/pages/api/views/[slug].ts`)
+1. Vercel 대시보드 → 이 프로젝트 → Storage 탭 → Upstash Redis(구 Vercel KV) 연결(무료 티어로 충분).
+2. 연결하면 `KV_REST_API_URL` / `KV_REST_API_TOKEN`이 프로젝트에 자동 주입됨 — 별도 작업 불필요.
+
+**댓글** (giscus, GitHub Discussions 기반)
+1. 이 저장소가 **공개(public)**이고 **Discussions**가 켜져 있어야 함 (Settings → General).
+2. [giscus.app](https://giscus.app)에서 `JuhyeokRa/ryans-automation-log`를 입력 → 안내에 따라
+   [giscus GitHub App](https://github.com/apps/giscus)을 이 저장소에 설치.
+3. Discussion 카테고리는 "Comments"(Announcements 타입 추천, 매핑은 `pathname`)로 새로 만들기.
+4. 페이지 하단에 생성되는 `<script>` 코드의 `data-repo` / `data-repo-id` / `data-category` /
+   `data-category-id` 값을 그대로 Vercel 환경 변수 `PUBLIC_GISCUS_REPO` /
+   `PUBLIC_GISCUS_REPO_ID` / `PUBLIC_GISCUS_CATEGORY` / `PUBLIC_GISCUS_CATEGORY_ID`에 등록.
+
 ## 🔒 Security Notice
 
-이 저장소는 **공개(public)** 상태입니다. API 키, 계정 정보, 개인 메모, 로컬 파일 경로(사용자명 포함) 등은
-절대 여기에 직접 커밋하지 않고 `.env`(gitignore 처리됨) 또는 비공개 Obsidian 위키에만 보관합니다.
-새 기능(조회수, 댓글 등)에 시크릿이 필요하면 Vercel 프로젝트의 환경 변수로만 설정합니다.
+API 키, 계정 정보, 개인 메모, 로컬 파일 경로(사용자명 포함) 등은 절대 여기에 직접 커밋하지 않고
+`.env`(gitignore 처리됨) 또는 비공개 Obsidian 위키에만 보관합니다. 조회수·댓글용 시크릿도 위처럼
+Vercel 프로젝트의 환경 변수로만 설정합니다.

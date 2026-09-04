@@ -1,0 +1,45 @@
+---
+// 조회수 뱃지. 마운트 시 클라이언트에서 /api/views/[slug]를 POST로 호출해
+// 조회수를 1 올리고 반환된 값을 표시한다. KV가 아직 연결 안 됐으면(0, configured:false)
+// 조용히 숨긴다 — 배포 초기에 "0회"가 보이는 걸 막기 위함.
+interface Props {
+	slug: string;
+}
+
+const { slug } = Astro.props;
+---
+
+<span class="view-counter" data-slug={slug} hidden>
+	👁 <span class="count">0</span>
+</span>
+
+<style>
+	.view-counter {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3em;
+	}
+</style>
+
+<script>
+	function initViewCounters() {
+		const nodes = document.querySelectorAll<HTMLElement>('.view-counter[data-slug]');
+		nodes.forEach(async (el) => {
+			const slug = el.dataset.slug;
+			if (!slug) return;
+			try {
+				const res = await fetch(`/api/views/${encodeURIComponent(slug)}`, { method: 'POST' });
+				if (!res.ok) return;
+				const data = await res.json();
+				if (!data.configured) return; // KV 미연결 상태면 숨김 유지
+				const countEl = el.querySelector('.count');
+				if (countEl) countEl.textContent = data.views.toLocaleString('ko-KR');
+				el.hidden = false;
+			} catch {
+				// 네트워크 오류 등은 조용히 무시 — 조회수는 부가 기능이라 실패해도 페이지엔 영향 없음
+			}
+		});
+	}
+
+	initViewCounters();
+</script>

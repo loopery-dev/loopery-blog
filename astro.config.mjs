@@ -2,11 +2,18 @@
 
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
+import vercel from '@astrojs/vercel';
 import { defineConfig, fontProviders } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://example.com',
+	// output stays 'static' (the default): every page is still prerendered at
+	// build time except src/pages/api/views/[slug].ts, which opts out via
+	// `export const prerender = false` to run as a Vercel serverless function
+	// (needed for the live view counter). The adapter is what makes that
+	// per-route opt-out possible.
+	adapter: vercel(),
 	integrations: [mdx(), sitemap()],
 	fonts: [
 		{
