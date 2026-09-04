@@ -7,7 +7,9 @@ import { defineConfig, fontProviders } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://example.com',
+	// sitemap/canonical/OG/RSS가 전부 이 값을 기준으로 절대 URL을 만든다.
+	// 커스텀 도메인을 연결하면 이 값도 같이 바꿔야 한다.
+	site: 'https://ryans-automation-log.vercel.app',
 	// output stays 'static' (the default): every page is still prerendered at
 	// build time except src/pages/api/views/[slug].ts, which opts out via
 	// `export const prerender = false` to run as a Vercel serverless function
