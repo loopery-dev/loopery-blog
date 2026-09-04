@@ -33,3 +33,18 @@ venv/
 
 # sync pipeline local state
 .sync-state.json
+
+# Vercel CLI local project link (org/project id)
+.vercel
+
+# credentials / keys of any kind — never commit these
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+*serviceAccount*.json
+
+# personal / local-only notes that sometimes get dropped in the repo root while writing
+NOTES.local.md
+TODO.local.md

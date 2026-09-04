@@ -1,19 +1,19 @@
 # 🚀 라이언의 자동화 일지 (Ryan's Automation Log)
 
 > Claude Code & AI 에이전트로 구축하는 자동매매 및 생산성 자동화 일지.
-> Obsidian(`D:\Juhyeok\Projects\obsidian`)의 wiki 노트를 정리해 Astro + Vercel 기반 블로그로 발행합니다.
+> 별도로 관리하는 개인 Obsidian 위키의 노트를 정리해 Astro + Vercel 기반 블로그로 발행합니다.
 
 ## 🛠 Tech Stack
 
 - **Framework:** [Astro](https://astro.build) (Static Site Generation)
 - **Deployment:** [Vercel](https://vercel.com) — GitHub `main` 브랜치 push 시 자동 빌드
-- **Content Source:** [Obsidian Vault](../obsidian) (`wiki/concepts`, `wiki/entities`, `wiki/synthesis`)
+- **Content Source:** 비공개 Obsidian 위키 (`wiki/concepts`, `wiki/entities`, `wiki/synthesis`) — 이 저장소에는 포함되지 않음
 - **Automation:** Claude Code (wiki → 블로그 포스트 변환, git commit/push)
 
 ## 📁 Pipeline Architecture
 
 ```text
-[Obsidian Vault: wiki/*] ──(Claude Code)──► [src/content/blog/*.md] ──(git push)──► [Vercel 자동 배포]
+[비공개 Obsidian 위키: wiki/*] ──(Claude Code)──► [src/content/blog/*.md] ──(git push)──► [Vercel 자동 배포]
 ```
 
 Obsidian 볼트에서 `/publish-blog` 스킬을 실행하면 wiki 노트를 골라 이 저장소의 `src/content/blog/`로 변환·커밋합니다.
@@ -53,6 +53,7 @@ description: "SEO 요약 (2문장 이내)"
 pubDate: 2026-09-02
 updatedDate: 2026-09-02   # 선택
 heroImage: ../../assets/xxx.jpg   # 선택
+category: "ai-automation"   # src/categories.ts의 CATEGORY_SLUGS 중 하나, 필수
 tags: ["ClaudeCode", "Obsidian"]
 lang: "kr"   # "kr" | "en" — 듀얼 발행용
 draft: false
@@ -61,4 +62,6 @@ draft: false
 
 ## 🔒 Security Notice
 
-API 키, 계정 정보, 개인 메모는 `.env` 및 Obsidian Vault의 비공개 경로에만 보관하며 GitHub에 직접 커밋하지 않습니다.
+이 저장소는 **공개(public)** 상태입니다. API 키, 계정 정보, 개인 메모, 로컬 파일 경로(사용자명 포함) 등은
+절대 여기에 직접 커밋하지 않고 `.env`(gitignore 처리됨) 또는 비공개 Obsidian 위키에만 보관합니다.
+새 기능(조회수, 댓글 등)에 시크릿이 필요하면 Vercel 프로젝트의 환경 변수로만 설정합니다.
