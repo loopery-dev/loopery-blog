@@ -1,0 +1,70 @@
+<svg viewBox="0 0 1000 620" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Malgun Gothic', sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8a8f98"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="620" fill="#fafafa"/>
+
+  <!-- Toss Open API -->
+  <rect x="380" y="20" width="240" height="56" rx="10" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="500" y="54" text-anchor="middle" font-size="16" font-weight="600" fill="#3730a3">토스증권 Open API</text>
+
+  <!-- toss_client.py -->
+  <line x1="500" y1="76" x2="500" y2="112" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="360" y="112" width="280" height="56" rx="10" fill="#ffffff" stroke="#d0d5dd" stroke-width="1.5"/>
+  <text x="500" y="140" text-anchor="middle" font-size="14" font-weight="600" fill="#1a1a1a">toss_client.py</text>
+  <text x="500" y="158" text-anchor="middle" font-size="11" fill="#666">OAuth2 토큰 발급 + API 래퍼</text>
+
+  <!-- portfolio.py + benchmark.py -->
+  <line x1="500" y1="168" x2="500" y2="204" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="270" y="204" width="230" height="56" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+  <text x="385" y="228" text-anchor="middle" font-size="14" font-weight="600" fill="#065f46">portfolio.py</text>
+  <text x="385" y="246" text-anchor="middle" font-size="11" fill="#047857">holdings → DataFrame/summary</text>
+
+  <rect x="510" y="204" width="230" height="56" rx="10" fill="#fff7ed" stroke="#f97316" stroke-width="1.5"/>
+  <text x="625" y="228" text-anchor="middle" font-size="14" font-weight="600" fill="#9a3412">benchmark.py</text>
+  <text x="625" y="246" text-anchor="middle" font-size="11" fill="#c2410c">SPY 몰빵 vs 원금 그대로</text>
+
+  <line x1="500" y1="232" x2="510" y2="232" stroke="#8a8f98" stroke-width="1.5" stroke-dasharray="3,3"/>
+
+  <!-- history.py / snapshot.py -->
+  <line x1="385" y1="260" x2="385" y2="296" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="270" y="296" width="230" height="56" rx="10" fill="#f5f3ff" stroke="#8b5cf6" stroke-width="1.5"/>
+  <text x="385" y="320" text-anchor="middle" font-size="14" font-weight="600" fill="#5b21b6">history.py + snapshot.py</text>
+  <text x="385" y="338" text-anchor="middle" font-size="11" fill="#6d28d9">로컬 SQLite에 일별 스냅샷 기록</text>
+  <text x="385" y="373" text-anchor="middle" font-size="10.5" fill="#888">(Windows 작업 스케줄러로 매일 자동 실행)</text>
+
+  <!-- consumers row -->
+  <line x1="385" y1="352" x2="385" y2="404" stroke="#8a8f98" stroke-width="1.5"/>
+  <line x1="625" y1="260" x2="625" y2="404" stroke="#8a8f98" stroke-width="1.5"/>
+  <line x1="150" y1="404" x2="850" y2="404" stroke="#8a8f98" stroke-width="1.5"/>
+  <line x1="150" y1="404" x2="150" y2="440" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="500" y1="404" x2="500" y2="440" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="850" y1="404" x2="850" y2="440" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- CLI -->
+  <rect x="40" y="440" width="220" height="70" rx="10" fill="#ffffff" stroke="#d0d5dd" stroke-width="1.5"/>
+  <text x="150" y="468" text-anchor="middle" font-size="14" font-weight="600" fill="#1a1a1a">analyze_portfolio.py</text>
+  <text x="150" y="486" text-anchor="middle" font-size="11" fill="#666">CLI 리포트</text>
+  <text x="150" y="502" text-anchor="middle" font-size="10.5" fill="#999">터미널에서 표로 확인</text>
+
+  <!-- Streamlit -->
+  <rect x="390" y="440" width="220" height="70" rx="10" fill="#ffffff" stroke="#d0d5dd" stroke-width="1.5"/>
+  <text x="500" y="468" text-anchor="middle" font-size="14" font-weight="600" fill="#1a1a1a">app.py (Streamlit)</text>
+  <text x="500" y="486" text-anchor="middle" font-size="11" fill="#666">인터랙티브 웹 뷰어</text>
+  <text x="500" y="502" text-anchor="middle" font-size="10.5" fill="#999">가끔 깊이 파고들 때</text>
+
+  <!-- Static HTML -->
+  <rect x="740" y="440" width="220" height="70" rx="10" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="850" y="468" text-anchor="middle" font-size="14" font-weight="600" fill="#1e3a8a">report.py</text>
+  <text x="850" y="486" text-anchor="middle" font-size="11" fill="#1d4ed8">정적 HTML 리포트</text>
+  <text x="850" y="502" text-anchor="middle" font-size="10.5" fill="#2563eb" font-weight="600">평소엔 이걸로 확인 ⭐</text>
+
+  <!-- footer note -->
+  <rect x="700" y="540" width="260" height="52" rx="8" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.2"/>
+  <text x="830" y="562" text-anchor="middle" font-size="11" fill="#92400e">서버·브라우저 상시 구동 없이</text>
+  <text x="830" y="578" text-anchor="middle" font-size="11" fill="#92400e">파일 하나만 열면 됨</text>
+  <line x1="850" y1="510" x2="830" y2="540" stroke="#f59e0b" stroke-width="1.2" marker-end="url(#arrow)"/>
+</svg>

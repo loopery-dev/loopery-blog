@@ -2,6 +2,7 @@
 title: "토스증권 API로 내 포트폴리오 분석기 만들기 — Claude Code와 함께 겪은 버그 5가지"
 description: "알고리즘 트레이딩 개발 1단계로 토스증권 Open API를 붙여 포트폴리오 분석 도구를 만들었다. CLI에서 Streamlit, 정적 HTML 리포트까지 아키텍처가 바뀐 과정과 실제로 겪은 버그 5가지를 기록했다."
 pubDate: 2026-09-07
+heroImage: "../../assets/toss-portfolio-analyzer/dashboard-overview.png"
 category: "ai-automation"
 tags: ["Claude Code", "토스증권 Open API", "알고리즘 트레이딩", "Streamlit", "Python"]
 lang: "kr"
@@ -29,6 +30,8 @@ draft: false
 그 다음 "표보다 뷰어처럼 보고 싶다"는 요구에 맞춰 Streamlit으로 웹 대시보드(`app.py`)를 붙였다. 파이차트, 종목별 표, 일별 자산 추이 라인차트까지 — 여기서 새로운 문제가 하나 생겼다. **토스 API엔 과거 평가금액을 조회하는 히스토리 엔드포인트가 없다.** 그래서 앱을 열 때마다(또는 스케줄러로 매일) 오늘자 스냅샷을 로컬 SQLite에 직접 쌓는 방식(`history.py`, `snapshot.py`)을 채택했다. 오늘부터 시작해서 앞으로 쌓이는 구조라, 과거로 소급은 안 된다는 게 명확한 한계다.
 
 여기에 재미있는 기능 하나를 더 얹었다. **"오늘부로 원금을 전부 S&P500(SPY)에 몰빵했다면?" vs "그냥 현금으로 뒀다면?"**을 실제 포트폴리오와 나란히 비교하는 차트(`benchmark.py`)다. 지수 자체는 API가 안 줘서 SPY ETF를 프록시로 썼다.
+
+![toss-portfolio-analyzer 아키텍처: 토스 Open API → toss_client.py → portfolio.py/benchmark.py → history.py+snapshot.py → CLI/Streamlit/정적 HTML 세 갈래로 소비](../../assets/toss-portfolio-analyzer/architecture.svg)
 
 그런데 정작 다 만들고 나니 "이걸 확인하려고 매번 `streamlit run`을 켜고 브라우저 탭을 계속 열어둬야 하는 게 아직 좀 어색하다"는 피드백이 나왔다. 맞는 말이었다. 그래서 마지막으로 한 번 더 방향을 틀었다 — Plotly.js를 통째로 파일 안에 인라인한 **정적 HTML 리포트**(`report.py`)로. 이제는 스케줄러가 매일 파일 하나를 갱신해두면, 그냥 더블클릭하거나 고정해둔 브라우저 탭을 새로고침하는 것만으로 충분하다. 서버도, 켜둔 터미널도 필요 없다. Streamlit 앱은 가끔 더 깊이 파고들고 싶을 때를 위해 남겨뒀다.
 
