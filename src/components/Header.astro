@@ -1,7 +1,7 @@
 ---
-import { SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
+import { t } from '../i18n/ui';
 import type { Lang } from '../i18n/utils';
 
 interface Props {
@@ -18,7 +18,7 @@ const { lang = 'ko', homeHref = '/', blogHref = '/blog', aboutHref = '/about', a
 
 <header>
 	<nav>
-		<h2><a href={homeHref}>{SITE_TITLE}</a></h2>
+		<h2><a href={homeHref}>{t(lang).siteTitle}</a></h2>
 		<div class="internal-links">
 			<HeaderLink href={homeHref}>Home</HeaderLink>
 			<HeaderLink href={blogHref}>Blog</HeaderLink>

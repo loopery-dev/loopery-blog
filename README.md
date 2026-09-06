@@ -1,4 +1,4 @@
-# 🚀 라이언의 자동화 일지 (Ryan's Automation Log)
+# ❄️ 라이언의 스노우볼 (Ryan's Snowball)
 
 > Claude Code & AI 에이전트로 구축하는 자동매매 및 생산성 자동화 일지.
 > 별도로 관리하는 개인 Obsidian 위키의 노트를 정리해 Astro + Vercel 기반 블로그로 발행합니다.
