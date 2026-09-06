@@ -146,6 +146,6 @@ const viewSlug = slug && (lang === 'en' ? `en-${slug}` : slug);
 				</div>
 			</article>
 		</main>
-		<Footer />
+		<Footer lang={lang} privacyHref={lang === 'en' ? '/en/privacy' : '/privacy'} />
 	</body>
 </html>

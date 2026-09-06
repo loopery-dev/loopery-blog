@@ -15,6 +15,8 @@ export const UI = {
 		switchTo: 'English',
 		aboutTitle: 'About',
 		lastUpdatedOn: '마지막 수정',
+		footerRights: '라이언. All rights reserved.',
+		privacyPolicy: '개인정보처리방침',
 	},
 	en: {
 		siteTitle: "Ryan's Snowball",
@@ -32,6 +34,8 @@ export const UI = {
 		switchTo: '한국어',
 		aboutTitle: 'About',
 		lastUpdatedOn: 'Last updated on',
+		footerRights: 'Ryan. All rights reserved.',
+		privacyPolicy: 'Privacy Policy',
 	},
 } as const;
 

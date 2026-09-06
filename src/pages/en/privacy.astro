@@ -1,0 +1,90 @@
+---
+import Layout from '../../layouts/BlogPost.astro';
+---
+
+<Layout
+	title="Privacy Policy"
+	description="Privacy policy for Ryan's Snowball (ryansnowball.com)."
+	pubDate={new Date('September 07 2026')}
+	lang="en"
+	hasTranslation={true}
+>
+	<p>Last updated: 2026-09-07</p>
+
+	<p>
+		This page explains how <strong>Ryan's Snowball</strong> (ryansnowball.com, "this blog")
+		handles visitor information.
+	</p>
+
+	<h2>What we collect</h2>
+	<p>You can read this blog without creating an account or entering any personal information. Only a limited amount of data is handled:</p>
+	<ul>
+		<li>
+			<strong>View counts</strong>: per-post view counts are tallied anonymously (Upstash Redis).
+			No personally identifiable information is stored.
+		</li>
+		<li>
+			<strong>Hosting logs</strong>: this blog is hosted on Vercel, which may technically collect
+			standard web server logs (IP address, request time, user agent, etc.). See the{' '}
+			<a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer"
+				>Vercel Privacy Policy</a
+			> for details.
+		</li>
+	</ul>
+
+	<h2>Comments (Giscus)</h2>
+	<p>
+		Post comments are powered by <strong>Giscus</strong>, built on GitHub Discussions. Leaving a
+		comment requires signing in with a GitHub account, and comments are posted publicly to GitHub
+		Discussions. GitHub's data handling is governed by the{' '}
+		<a
+			href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement"
+			target="_blank"
+			rel="noopener noreferrer">GitHub Privacy Statement</a
+		>.
+	</p>
+
+	<h2>Advertising (Google AdSense)</h2>
+	<p>This blog <strong>does not currently show ads.</strong> If Google AdSense is enabled in the future:</p>
+	<ul>
+		<li>
+			Google and other third-party vendors may use cookies to serve ads based on a user's prior
+			visits to this or other websites.
+		</li>
+		<li>
+			See <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer"
+				>Google's advertising policies</a
+			> for how Google uses advertising cookies.
+		</li>
+		<li>
+			Users can opt out of personalized advertising via{' '}
+			<a href="https://adssettings.google.com/" target="_blank" rel="noopener noreferrer"
+				>Google Ads Settings</a
+			>.
+		</li>
+	</ul>
+	<p>This section will be updated once ads actually go live.</p>
+
+	<h2>Cookies</h2>
+	<p>
+		Beyond what's strictly necessary to run the site, this blog does not currently use tracking
+		cookies of its own. As noted above, using comments (Giscus) or, in the future, ads (Google
+		AdSense) may cause those third parties to set their own cookies.
+	</p>
+
+	<h2>Contact</h2>
+	<p>
+		Questions about this policy? Please open an issue on{' '}
+		<a
+			href="https://github.com/Juhyeok-Ryan/ryans-automation-log/issues"
+			target="_blank"
+			rel="noopener noreferrer">this blog's GitHub repository</a
+		>.
+	</p>
+
+	<h2>Changes</h2>
+	<p>
+		This policy may be updated as the blog evolves (e.g. if ads are introduced), and the "Last
+		updated" date on this page will reflect that.
+	</p>
+</Layout>
