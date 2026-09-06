@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ryans-automation-log.vercel.app/sitemap-index.xml
+Sitemap: https://ryansnowball.com/sitemap-index.xml
