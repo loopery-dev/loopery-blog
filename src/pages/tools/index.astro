@@ -1,0 +1,147 @@
+---
+import ToolPage from '../../layouts/ToolPage.astro';
+
+// 새 미니 앱을 만들면 여기에 한 줄 추가한다. status: 'live' | 'soon'
+const TOOLS = [
+	{
+		href: '/tools/home-affordability',
+		icon: '🏠',
+		title: '주택 구입 가능 금액 계산기',
+		desc: '보유 현금과 연소득으로 살 수 있는 최대 집값을 계산합니다. LTV·DSR·DTI·대출 절대한도를 동시에 적용하고, 넷 중 무엇이 한도를 막고 있는지 짚어줍니다.',
+		tags: ['LTV', 'DSR', 'DTI', '스트레스 금리', '취득세'],
+		status: 'live' as const,
+	},
+	{
+		href: '#',
+		icon: '📈',
+		title: '주식 백테스팅 계산기',
+		desc: '적립식·거치식 매수 전략을 과거 주가에 대입해 결과를 비교합니다.',
+		tags: ['백테스팅', '적립식 투자'],
+		status: 'soon' as const,
+	},
+];
+---
+
+<ToolPage
+	title="Tools"
+	description="계산기와 시뮬레이터 모음. 부동산 구입 가능 금액, 주식 백테스팅 등 직접 만들어 쓰는 미니 앱들입니다."
+	heading="🧰 Tools"
+	tagline="글로 설명하는 대신 직접 숫자를 넣어볼 수 있게 만든 계산기들입니다. 전부 브라우저에서만 계산되며, 입력한 값은 서버로 전송되지 않습니다."
+	width="880px"
+>
+	<ul class="tools">
+		{
+			TOOLS.map((tool) => (
+				<li class={tool.status}>
+					{tool.status === 'live' ? (
+						<a href={tool.href}>
+							<span class="icon" aria-hidden="true">
+								{tool.icon}
+							</span>
+							<div class="body">
+								<h2>{tool.title}</h2>
+								<p>{tool.desc}</p>
+								<div class="tags">
+									{tool.tags.map((tag) => (
+										<span class="tag">{tag}</span>
+									))}
+								</div>
+							</div>
+						</a>
+					) : (
+						<div class="inner">
+							<span class="icon" aria-hidden="true">
+								{tool.icon}
+							</span>
+							<div class="body">
+								<h2>
+									{tool.title} <span class="badge">준비 중</span>
+								</h2>
+								<p>{tool.desc}</p>
+								<div class="tags">
+									{tool.tags.map((tag) => (
+										<span class="tag">{tag}</span>
+									))}
+								</div>
+							</div>
+						</div>
+					)}
+				</li>
+			))
+		}
+	</ul>
+</ToolPage>
+
+<style>
+	.tools {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		gap: 1.2em;
+	}
+	.tools li {
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 12px;
+		background: #fff;
+		transition: box-shadow 0.2s ease, transform 0.2s ease;
+	}
+	.tools li.live:hover {
+		box-shadow: var(--box-shadow);
+		transform: translateY(-2px);
+	}
+	.tools li.soon {
+		opacity: 0.6;
+	}
+	.tools a,
+	.tools .inner {
+		display: flex;
+		gap: 1.2em;
+		padding: 1.5em;
+		text-decoration: none;
+		color: inherit;
+	}
+	.icon {
+		font-size: 2em;
+		line-height: 1;
+	}
+	.body h2 {
+		margin: 0 0 0.4em;
+		font-size: 1.15em;
+		color: var(--black);
+	}
+	.body p {
+		margin: 0 0 0.8em;
+		color: rgb(var(--gray));
+		font-size: 0.95em;
+		line-height: 1.6;
+	}
+	.badge {
+		font-size: 0.65em;
+		vertical-align: middle;
+		background: rgb(var(--gray-light));
+		color: rgb(var(--gray-dark));
+		padding: 0.25em 0.6em;
+		border-radius: 999px;
+		font-weight: 600;
+	}
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4em;
+	}
+	.tag {
+		font-size: 0.78em;
+		color: rgb(var(--gray-dark));
+		background: rgba(var(--gray-light), 0.7);
+		padding: 0.25em 0.6em;
+		border-radius: 6px;
+	}
+	@media (max-width: 600px) {
+		.tools a,
+		.tools .inner {
+			flex-direction: column;
+			gap: 0.8em;
+		}
+	}
+</style>

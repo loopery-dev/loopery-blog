@@ -1,0 +1,498 @@
+---
+import ToolPage from '../../layouts/ToolPage.astro';
+
+// 규제 기준일. 수치를 갱신하면 이 날짜도 같이 바꾼다 (화면에 그대로 노출된다).
+const RULE_BASIS = '2025년 10·15 대책 + 2026년 스트레스 DSR 3단계 기준';
+---
+
+<ToolPage
+	title="주택 구입 가능 금액 계산기"
+	description="보유 현금과 연소득으로 살 수 있는 집값을 계산합니다. LTV·DSR·DTI·대출 절대한도를 동시에 적용해 무엇이 한도를 막고 있는지 보여줍니다."
+	heading="🏠 주택 구입 가능 금액 계산기"
+	tagline="현금과 소득을 넣으면, 규제를 모두 통과하는 최대 집값과 그 한도를 막고 있는 규제를 알려줍니다."
+	width="980px"
+>
+	<form id="calc">
+		<section class="card">
+			<h2>내 조건</h2>
+			<div class="grid">
+				<label>
+					보유 현금 <span class="unit">만원</span>
+					<input type="number" id="cash" value="30000" min="0" step="100" />
+					<small id="cash-hint" class="hint"></small>
+				</label>
+				<label>
+					연소득 (세전) <span class="unit">만원</span>
+					<input type="number" id="income" value="6000" min="0" step="100" />
+					<small id="income-hint" class="hint"></small>
+				</label>
+				<label>
+					기존 대출 연 원리금 <span class="unit">만원</span>
+					<input type="number" id="existing" value="0" min="0" step="10" />
+					<small class="hint">신용대출·자동차할부 등 1년치 상환액</small>
+				</label>
+				<label>
+					대출 금리 <span class="unit">%</span>
+					<input type="number" id="rate" value="4.5" min="0" step="0.1" />
+					<small class="hint">실제 상환액 계산에 쓰는 금리</small>
+				</label>
+				<label>
+					대출 만기 <span class="unit">년</span>
+					<input type="number" id="years" value="30" min="1" max="50" step="1" />
+					<small class="hint">원리금균등상환 기준</small>
+				</label>
+				<label>
+					금융권
+					<select id="lender">
+						<option value="40" selected>1금융권 (DSR 40%)</option>
+						<option value="50">2금융권 (DSR 50%)</option>
+					</select>
+					<small class="hint">DSR 상한이 달라집니다</small>
+				</label>
+			</div>
+
+			<div class="grid two">
+				<label>
+					지역
+					<select id="region">
+						<option value="regulated" selected>규제지역 (서울 등)</option>
+						<option value="normal">비규제지역</option>
+					</select>
+				</label>
+				<label>
+					주택 보유 상태
+					<select id="status">
+						<option value="first" selected>생애최초</option>
+						<option value="none">무주택</option>
+						<option value="one">1주택 (기존주택 처분조건)</option>
+						<option value="multi">다주택 (2주택 이상)</option>
+					</select>
+				</label>
+			</div>
+
+			<label class="checkbox">
+				<input type="checkbox" id="fees" checked />
+				취득세·중개보수를 현금에서 차감 (실제로 살 수 있는 집값)
+			</label>
+			<div class="grid two" id="fee-fields">
+				<label>
+					부대비용률 직접 지정 <span class="unit">%</span>
+					<input type="number" id="fee-override" placeholder="비우면 자동 계산" min="0" step="0.1" />
+					<small class="hint">다주택 취득세 중과(8~12%) 등은 여기에 직접 입력</small>
+				</label>
+				<label>
+					기타 비용 (법무비 등) <span class="unit">만원</span>
+					<input type="number" id="extra-fee" value="150" min="0" step="10" />
+				</label>
+			</div>
+		</section>
+
+		<details class="card">
+			<summary>규제 기준값 직접 수정하기</summary>
+			<p class="basis">
+				기본값은 <strong>{RULE_BASIS}</strong>입니다. 부동산 규제는 자주 바뀌므로, 최신 기준이
+				다르면 아래에서 직접 고쳐서 계산하세요. 위의 <strong>지역·보유 상태·금융권</strong>을
+				바꾸면 이 값들은 해당 프리셋으로 다시 채워집니다.
+			</p>
+			<div class="grid">
+				<label>
+					LTV <span class="unit">%</span>
+					<input type="number" id="ltv" value="70" min="0" max="100" step="1" />
+				</label>
+				<label>
+					DSR <span class="unit">%</span>
+					<input type="number" id="dsr" value="40" min="0" max="100" step="1" />
+				</label>
+				<label>
+					스트레스 금리 가산 <span class="unit">%p</span>
+					<input type="number" id="stress" value="3.0" min="0" step="0.1" />
+					<small class="hint">한도 심사에만 가산 (실제 이자에는 안 붙음)</small>
+				</label>
+			</div>
+			<label class="checkbox">
+				<input type="checkbox" id="dti-on" checked />
+				DTI 적용
+				<input type="number" id="dti" value="40" min="0" max="100" step="1" class="inline-num" />
+				<span class="unit">%</span>
+			</label>
+			<label class="checkbox">
+				<input type="checkbox" id="caps-on" checked />
+				주택가격 구간별 대출 절대한도 적용
+			</label>
+			<div class="grid three" id="cap-fields">
+				<label>
+					15억 이하 <span class="unit">만원</span>
+					<input type="number" id="cap1" value="60000" min="0" step="1000" />
+				</label>
+				<label>
+					15~25억 <span class="unit">만원</span>
+					<input type="number" id="cap2" value="40000" min="0" step="1000" />
+				</label>
+				<label>
+					25억 초과 <span class="unit">만원</span>
+					<input type="number" id="cap3" value="20000" min="0" step="1000" />
+				</label>
+			</div>
+		</details>
+	</form>
+
+	<section class="card result" id="result">
+		<h2>결과</h2>
+		<div class="headline">
+			<div class="headline-label">구입 가능한 최대 주택가격</div>
+			<div class="headline-value" id="out-price">—</div>
+			<div class="headline-sub" id="out-breakdown"></div>
+		</div>
+
+		<div class="binding" id="out-binding"></div>
+
+		<h3>규제별 대출 상한</h3>
+		<table>
+			<thead>
+				<tr><th>규제</th><th>허용 대출액</th><th>비고</th></tr>
+			</thead>
+			<tbody id="out-limits"></tbody>
+		</table>
+
+		<h3>상환 부담</h3>
+		<div class="metrics" id="out-metrics"></div>
+	</section>
+
+	<p class="disclaimer">
+		⚠️ 이 계산기는 <strong>참고용 추정치</strong>입니다. 실제 대출 한도는 은행별 심사 기준, 방공제
+		(소액임차보증금), 신용등급, 담보 감정가, DSR 산정 시 만기 제한 등에 따라 달라집니다. 부동산
+		규제는 자주 바뀌므로 실행 전에는 반드시 금융기관과 최신 정부 발표로 확인하세요. 투자·대출
+		권유가 아닙니다.
+	</p>
+</ToolPage>
+
+<style>
+	.card {
+		background: #fff;
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 12px;
+		padding: 1.5em;
+		margin-bottom: 1.5em;
+	}
+	.card h2 {
+		margin: 0 0 1em;
+		font-size: 1.15em;
+	}
+	.card h3 {
+		margin: 1.8em 0 0.6em;
+		font-size: 1em;
+		color: rgb(var(--gray-dark));
+	}
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1em;
+		margin-bottom: 1em;
+	}
+	.grid.two {
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.grid.three {
+		grid-template-columns: repeat(3, 1fr);
+	}
+	/* block으로 둬야 "보유 현금"과 단위 "만원"이 한 줄에 이어서 나온다.
+	   flex column이면 자식이 전부 각자 줄을 차지해 단위가 아래로 떨어진다. */
+	label {
+		display: block;
+		font-size: 0.9em;
+		font-weight: 600;
+		color: rgb(var(--gray-dark));
+	}
+	.unit {
+		font-weight: 400;
+		color: rgb(var(--gray));
+	}
+	input[type='number'],
+	select {
+		display: block;
+		font: inherit;
+		font-weight: 400;
+		padding: 0.55em 0.7em;
+		margin-top: 0.35em;
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 8px;
+		background: #fff;
+		width: 100%;
+	}
+	input[type='number']:focus,
+	select:focus {
+		outline: 2px solid var(--accent);
+		outline-offset: 1px;
+	}
+	.hint {
+		display: block;
+		margin-top: 0.35em;
+		font-weight: 400;
+		font-size: 0.82em;
+		color: rgb(var(--gray));
+	}
+	.checkbox {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 0.5em;
+		margin-bottom: 1em;
+		font-weight: 400;
+	}
+	.checkbox input[type='checkbox'] {
+		display: inline-block;
+		width: auto;
+		margin-top: 0;
+	}
+	.checkbox .inline-num {
+		display: inline-block;
+		margin-top: 0;
+	}
+	.inline-num {
+		width: 5.5em !important;
+	}
+	details.card summary {
+		cursor: pointer;
+		font-weight: 600;
+		color: rgb(var(--gray-dark));
+	}
+	details.card[open] summary {
+		margin-bottom: 1em;
+	}
+	.basis {
+		font-size: 0.88em;
+		color: rgb(var(--gray));
+		background: rgba(var(--gray-light), 0.5);
+		padding: 0.8em 1em;
+		border-radius: 8px;
+		margin: 0 0 1.2em;
+	}
+	.headline {
+		text-align: center;
+		padding: 1.2em 0 0.5em;
+	}
+	.headline-label {
+		font-size: 0.9em;
+		color: rgb(var(--gray));
+	}
+	.headline-value {
+		font-size: 2.4em;
+		font-weight: 700;
+		line-height: 1.2;
+		margin: 0.1em 0;
+	}
+	.headline-sub {
+		font-size: 0.9em;
+		color: rgb(var(--gray));
+	}
+	.binding {
+		text-align: center;
+		margin: 1em 0 0.5em;
+		font-size: 0.92em;
+	}
+	.binding span {
+		display: inline-block;
+		padding: 0.4em 1em;
+		border-radius: 999px;
+		background: rgba(255, 176, 25, 0.15);
+		color: #8a5a00;
+		font-weight: 600;
+	}
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.92em;
+	}
+	th,
+	td {
+		padding: 0.6em 0.5em;
+		border-bottom: 1px solid rgb(var(--gray-light));
+		text-align: right;
+	}
+	th:first-child,
+	td:first-child {
+		text-align: left;
+	}
+	tr.is-binding {
+		background: rgba(255, 176, 25, 0.1);
+		font-weight: 700;
+	}
+	td.note {
+		text-align: left;
+		color: rgb(var(--gray));
+		font-weight: 400;
+		font-size: 0.92em;
+	}
+	.metrics {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 1em;
+	}
+	.metric {
+		background: rgba(var(--gray-light), 0.5);
+		border-radius: 8px;
+		padding: 0.8em 1em;
+	}
+	.metric .k {
+		font-size: 0.82em;
+		color: rgb(var(--gray));
+	}
+	.metric .v {
+		font-size: 1.15em;
+		font-weight: 700;
+	}
+	.disclaimer {
+		font-size: 0.85em;
+		color: rgb(var(--gray));
+		line-height: 1.7;
+		border-top: 1px solid rgb(var(--gray-light));
+		padding-top: 1.2em;
+	}
+	@media (max-width: 720px) {
+		.grid,
+		.grid.two,
+		.grid.three,
+		.metrics {
+			grid-template-columns: 1fr;
+		}
+		.headline-value {
+			font-size: 1.8em;
+		}
+	}
+</style>
+
+<script>
+	import { BINDING_LABEL, calculate, formatKRW } from '../../tools/mortgage';
+	import type { Inputs, Regulation } from '../../tools/mortgage';
+
+	const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+	const num = (id: string) => Number($<HTMLInputElement>(id).value) || 0;
+	const checked = (id: string) => $<HTMLInputElement>(id).checked;
+
+	// 지역·보유 상태에 따른 규제 프리셋.
+	// 규제지역 다주택은 LTV 0%(주택구입 목적 주담대 금지)라 대출이 0으로 나온다.
+	function preset() {
+		const region = $<HTMLSelectElement>('region').value;
+		const status = $<HTMLSelectElement>('status').value;
+		const regulated = region === 'regulated';
+
+		let ltv: number;
+		if (regulated) {
+			if (status === 'multi') ltv = 0;
+			else if (status === 'first') ltv = 70;
+			else ltv = 40;
+		} else {
+			ltv = status === 'multi' ? 60 : 70;
+		}
+
+		$<HTMLInputElement>('ltv').value = String(ltv);
+		$<HTMLInputElement>('dsr').value = $<HTMLSelectElement>('lender').value;
+		$<HTMLInputElement>('stress').value = regulated ? '3.0' : '1.5';
+		$<HTMLInputElement>('dti-on').checked = regulated;
+		$<HTMLInputElement>('caps-on').checked = regulated;
+	}
+
+	function readInputs(): Inputs {
+		const override = $<HTMLInputElement>('fee-override').value.trim();
+		return {
+			cash: num('cash'),
+			income: num('income'),
+			existingAnnualPayment: num('existing'),
+			ratePct: num('rate'),
+			years: num('years'),
+			includeFees: checked('fees'),
+			feeRateOverridePct: override === '' ? null : Number(override),
+			extraFee: num('extra-fee'),
+		};
+	}
+
+	function readRegulation(): Regulation {
+		return {
+			ltvPct: num('ltv'),
+			dsrPct: num('dsr'),
+			dtiPct: num('dti'),
+			dtiEnabled: checked('dti-on'),
+			stressRatePct: num('stress'),
+			capsEnabled: checked('caps-on'),
+			loanCaps: [
+				{ maxPrice: 150000, cap: num('cap1') },
+				{ maxPrice: 250000, cap: num('cap2') },
+				{ maxPrice: Infinity, cap: num('cap3') },
+			],
+		};
+	}
+
+	function render() {
+		const inputs = readInputs();
+		const reg = readRegulation();
+		const r = calculate(inputs, reg);
+
+		$('cash-hint').textContent = formatKRW(inputs.cash);
+		$('income-hint').textContent = formatKRW(inputs.income);
+		$<HTMLDivElement>('fee-fields').style.display = inputs.includeFees ? '' : 'none';
+		$<HTMLDivElement>('cap-fields').style.display = reg.capsEnabled ? '' : 'none';
+
+		$('out-price').textContent = formatKRW(r.price);
+		$('out-breakdown').textContent =
+			`현금 ${formatKRW(inputs.cash)} + 대출 ${formatKRW(r.loan)}` +
+			(inputs.includeFees ? ` − 부대비용 ${formatKRW(r.fees)}` : '');
+
+		$('out-binding').innerHTML =
+			r.loan > 0
+				? `<span>한도를 막고 있는 규제: ${BINDING_LABEL[r.binding]}</span>`
+				: '<span>대출 가능액이 0원입니다 — 현금으로만 구입 가능합니다</span>';
+
+		const rows: [string, number, string, boolean][] = [
+			['LTV', r.limits.ltv, `주택가격의 ${reg.ltvPct}%`, r.binding === 'ltv'],
+			[
+				'DSR',
+				r.limits.dsr,
+				`연소득의 ${reg.dsrPct}% · 스트레스 +${reg.stressRatePct}%p 적용`,
+				r.binding === 'dsr',
+			],
+			[
+				'DTI',
+				r.limits.dti,
+				reg.dtiEnabled ? `연소득의 ${reg.dtiPct}%` : '미적용',
+				r.binding === 'dti',
+			],
+			[
+				'절대한도',
+				r.limits.cap,
+				reg.capsEnabled ? '주택가격 구간별 상한' : '미적용',
+				r.binding === 'cap',
+			],
+		];
+		$('out-limits').innerHTML = rows
+			.map(
+				([name, value, note, isBinding]) =>
+					`<tr class="${isBinding ? 'is-binding' : ''}"><td>${name}</td>` +
+					`<td>${Number.isFinite(value) ? formatKRW(value) : '—'}</td>` +
+					`<td class="note">${note}</td></tr>`
+			)
+			.join('');
+
+		const metrics: [string, string][] = [
+			['월 상환액', formatKRW(r.monthlyPayment)],
+			['총 이자', formatKRW(r.totalInterest)],
+			['실효 LTV', `${r.effectiveLtvPct.toFixed(1)}%`],
+			['심사 DSR (스트레스)', `${r.stressedDsrPct.toFixed(1)}%`],
+		];
+		$('out-metrics').innerHTML = metrics
+			.map(([k, v]) => `<div class="metric"><div class="k">${k}</div><div class="v">${v}</div></div>`)
+			.join('');
+	}
+
+	// 프리셋을 바꾸면 규제값을 다시 채운 뒤 계산한다
+	['region', 'status', 'lender'].forEach((id) =>
+		$(id).addEventListener('change', () => {
+			preset();
+			render();
+		})
+	);
+	$('calc').addEventListener('input', render);
+	$('calc').addEventListener('change', render);
+
+	preset();
+	render();
+</script>

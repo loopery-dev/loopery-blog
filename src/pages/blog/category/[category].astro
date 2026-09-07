@@ -106,7 +106,7 @@ const { category, posts } = Astro.props;
 		</style>
 	</head>
 	<body>
-		<Header lang="ko" altHref={`/en/blog/category/${category.slug}`} />
+		<Header lang="ko" toolsHref="/tools" altHref={`/en/blog/category/${category.slug}`} />
 		<main>
 			<a class="back-link" href="/blog">← 전체 글 보기</a>
 			<div class="category-header">

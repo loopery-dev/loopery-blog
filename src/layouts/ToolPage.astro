@@ -1,0 +1,60 @@
+---
+// 미니 앱(계산기 등) 전용 레이아웃.
+// BlogPost.astro는 글에 맞춰져 있어(발행일 표시, 720px 프로즈 폭, 댓글) 계산기처럼
+// 입력/결과가 넓게 붙는 페이지에는 맞지 않아서 따로 뒀다. 헤더/푸터/메타는 그대로 공유한다.
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+
+interface Props {
+	title: string;
+	description: string;
+	/** 페이지 상단에 크게 보여줄 제목 (없으면 title 사용) */
+	heading?: string;
+	/** 제목 아래 한 줄 설명 */
+	tagline?: string;
+	/** 본문 최대 폭 */
+	width?: string;
+}
+
+const { title, description, heading, tagline, width = '900px' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ko">
+	<head>
+		{/* 아직 영문판이 없어서 hreflang을 내보내지 않는다 */}
+		<BaseHead title={title} description={description} lang="ko" hasTranslation={false} />
+		<style define:vars={{ width }}>
+			main {
+				width: var(--width);
+				max-width: calc(100% - 2em);
+				margin: 0 auto;
+				padding: 2em 1em 4em;
+			}
+			.page-title {
+				margin-bottom: 2em;
+			}
+			.page-title h1 {
+				margin: 0 0 0.3em;
+				line-height: 1.2;
+			}
+			.page-title p {
+				margin: 0;
+				color: rgb(var(--gray));
+			}
+		</style>
+	</head>
+
+	<body>
+		<Header lang="ko" toolsHref="/tools" />
+		<main>
+			<div class="page-title">
+				<h1>{heading ?? title}</h1>
+				{tagline && <p>{tagline}</p>}
+			</div>
+			<slot />
+		</main>
+		<Footer lang="ko" privacyHref="/privacy" />
+	</body>
+</html>

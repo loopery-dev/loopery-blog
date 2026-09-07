@@ -9,11 +9,19 @@ interface Props {
 	homeHref?: string;
 	blogHref?: string;
 	aboutHref?: string;
+	/** 미니 앱 목록(/tools) 링크. 아직 한국어 페이지만 있어서 넘긴 곳에서만 보인다. */
+	toolsHref?: string;
 	altHref?: string;
 }
 
-const { lang = 'ko', homeHref = '/', blogHref = '/blog', aboutHref = '/about', altHref } =
-	Astro.props;
+const {
+	lang = 'ko',
+	homeHref = '/',
+	blogHref = '/blog',
+	aboutHref = '/about',
+	toolsHref,
+	altHref,
+} = Astro.props;
 ---
 
 <header>
@@ -23,6 +31,7 @@ const { lang = 'ko', homeHref = '/', blogHref = '/blog', aboutHref = '/about', a
 			<HeaderLink href={homeHref}>Home</HeaderLink>
 			<HeaderLink href={blogHref}>Blog</HeaderLink>
 			<HeaderLink href={aboutHref}>About</HeaderLink>
+			{toolsHref && <HeaderLink href={toolsHref}>Tools</HeaderLink>}
 			{altHref && <LanguageSwitcher lang={lang} altHref={altHref} />}
 		</div>
 		<div class="social-links">
