@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ryansnowball.com/sitemap-index.xml
+Sitemap: https://www.loopery.dev/sitemap-index.xml

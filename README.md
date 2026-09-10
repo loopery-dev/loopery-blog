@@ -24,12 +24,12 @@ Obsidian 볼트에서 `/publish-blog` 스킬을 실행하면 wiki 노트를 골�
 
 | 글 | 묶은 원본 노트 |
 |---|---|
-| [테슬라 기업 프로필](https://ryans-automation-log.vercel.app/blog/tesla/) | `entities/Tesla.md` |
-| [Tesla Ecosystem and Physical AI](https://ryans-automation-log.vercel.app/blog/tesla-ecosystem-and-physical-ai/) | `synthesis/Tesla-Ecosystem-and-Physical-AI.md` |
-| [왜 자율주행 AI는 '추론'을 시작했나](https://ryans-automation-log.vercel.app/blog/reasoning-centric-autonomous-driving/) | `synthesis/Reasoning-Centric-Autonomous-Driving.md`, `concepts/VLA-for-Autonomous-Driving.md`, `entities/NVIDIA.md` |
-| [Alpamayo-R1 해부](https://ryans-automation-log.vercel.app/blog/alpamayo-r1-deep-dive/) | `entities/Alpamayo-R1.md`, `entities/Cosmos-Reason.md`, `entities/AlpaSim.md`, `concepts/Chain-of-Causation.md`, `concepts/Flow-Matching-Trajectory-Decoder.md`, `concepts/Reasoning-Action-Consistency-RL.md` |
-| [FSD 두뇌를 물려받은 로봇들](https://ryans-automation-log.vercel.app/blog/fsd-cybercab-optimus-unboxed/) | `concepts/Full-Self-Driving.md`, `entities/Cybercab.md`, `entities/Tesla-Optimus.md`, `concepts/Unboxed-Manufacturing.md` |
-| [메가팩, AI 시대 전력망의 숨은 수혜자](https://ryans-automation-log.vercel.app/blog/megapack-ai-power-grid/) | `entities/Megapack.md` |
+| [테슬라 기업 프로필](https://www.loopery.dev/blog/tesla/) | `entities/Tesla.md` |
+| [Tesla Ecosystem and Physical AI](https://www.loopery.dev/blog/tesla-ecosystem-and-physical-ai/) | `synthesis/Tesla-Ecosystem-and-Physical-AI.md` |
+| [왜 자율주행 AI는 '추론'을 시작했나](https://www.loopery.dev/blog/reasoning-centric-autonomous-driving/) | `synthesis/Reasoning-Centric-Autonomous-Driving.md`, `concepts/VLA-for-Autonomous-Driving.md`, `entities/NVIDIA.md` |
+| [Alpamayo-R1 해부](https://www.loopery.dev/blog/alpamayo-r1-deep-dive/) | `entities/Alpamayo-R1.md`, `entities/Cosmos-Reason.md`, `entities/AlpaSim.md`, `concepts/Chain-of-Causation.md`, `concepts/Flow-Matching-Trajectory-Decoder.md`, `concepts/Reasoning-Action-Consistency-RL.md` |
+| [FSD 두뇌를 물려받은 로봇들](https://www.loopery.dev/blog/fsd-cybercab-optimus-unboxed/) | `concepts/Full-Self-Driving.md`, `entities/Cybercab.md`, `entities/Tesla-Optimus.md`, `concepts/Unboxed-Manufacturing.md` |
+| [메가팩, AI 시대 전력망의 숨은 수혜자](https://www.loopery.dev/blog/megapack-ai-power-grid/) | `entities/Megapack.md` |
 
 `wiki/`의 모든 주제가 현재 발행 완료 상태입니다. 새 노트가 추가되면 다시 `/publish-blog`로 후보를 스캔합니다 — 겹치는 내용이 많다면 이번처럼 클러스터로 묶어서 발행하는 걸 우선 검토합니다.
 
