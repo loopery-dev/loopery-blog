@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.loopery.dev/sitemap-index.xml
+Sitemap: https://loopery.dev/sitemap-index.xml
