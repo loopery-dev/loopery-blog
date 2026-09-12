@@ -1,0 +1,79 @@
+<svg viewBox="0 0 1000 566" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Malgun Gothic', sans-serif" role="img" aria-label="loopery-portfolio 아키텍처: 업비트와 토스증권 API가 각각의 어댑터를 거쳐 공통 스키마로 정규화되고, history와 aggregate를 지나 CLI·HTML 리포트·Streamlit 세 갈래로 소비된다">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8a8f98"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="566" fill="#fafafa"/>
+
+  <!-- ── 외부 API ── -->
+  <rect x="120" y="20" width="260" height="52" rx="10" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="250" y="52" text-anchor="middle" font-size="15" font-weight="600" fill="#92400e">업비트 Open API</text>
+
+  <rect x="620" y="20" width="260" height="52" rx="10" fill="#eff6ff" stroke="#3182f6" stroke-width="1.5"/>
+  <text x="750" y="52" text-anchor="middle" font-size="15" font-weight="600" fill="#1e40af">토스증권 Open API</text>
+
+  <!-- ── 어댑터 ── -->
+  <line x1="250" y1="72" x2="250" y2="106" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="750" y1="72" x2="750" y2="106" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="100" y="106" width="300" height="78" rx="10" fill="#ffffff" stroke="#d0d5dd" stroke-width="1.5"/>
+  <text x="250" y="131" text-anchor="middle" font-size="14" font-weight="600" fill="#1a1a1a">sources/upbit/</text>
+  <text x="250" y="151" text-anchor="middle" font-size="11.5" fill="#666">요청마다 JWT 직접 서명</text>
+  <text x="250" y="169" text-anchor="middle" font-size="11.5" fill="#666">평가금액을 안 줌 → 수량 × 현재가</text>
+
+  <rect x="600" y="106" width="300" height="78" rx="10" fill="#ffffff" stroke="#d0d5dd" stroke-width="1.5"/>
+  <text x="750" y="131" text-anchor="middle" font-size="14" font-weight="600" fill="#1a1a1a">sources/toss/</text>
+  <text x="750" y="151" text-anchor="middle" font-size="11.5" fill="#666">OAuth2 토큰 발급</text>
+  <text x="750" y="169" text-anchor="middle" font-size="11.5" fill="#666">평가금액 제공 · KRW + USD</text>
+
+  <!-- ── 공통 스키마 ── -->
+  <path d="M250 184 L250 206 L500 206 L500 220" fill="none" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M750 184 L750 206 L500 206" fill="none" stroke="#8a8f98" stroke-width="1.5"/>
+
+  <rect x="180" y="220" width="640" height="76" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+  <text x="500" y="246" text-anchor="middle" font-size="14.5" font-weight="700" fill="#065f46">sources/base.py — 공통 스키마</text>
+  <text x="500" y="267" text-anchor="middle" font-size="11.5" fill="#047857">source · symbol · assetClass · currency · quantity · marketValue · profitLoss</text>
+  <text x="500" y="285" text-anchor="middle" font-size="11.5" fill="#047857">없는 값은 0이 아니라 None (업비트엔 수수료 반영가가 없다)</text>
+
+  <!-- ── 저장 · 합산 ── -->
+  <path d="M500 296 L500 314 L325 314 L325 332" fill="none" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M500 296 L500 314 L675 314 L675 332" fill="none" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="180" y="332" width="290" height="76" rx="10" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="325" y="357" text-anchor="middle" font-size="14" font-weight="600" fill="#3730a3">history.py — SQLite</text>
+  <text x="325" y="377" text-anchor="middle" font-size="11.5" fill="#4338ca">PK (date, source, currency)</text>
+  <text x="325" y="395" text-anchor="middle" font-size="11.5" fill="#4338ca">환산 없이 통화별 원본 그대로</text>
+
+  <rect x="530" y="332" width="290" height="76" rx="10" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="675" y="357" text-anchor="middle" font-size="14" font-weight="600" fill="#3730a3">aggregate.py</text>
+  <text x="675" y="377" text-anchor="middle" font-size="11.5" fill="#4338ca">원화 환산 · 자산군 비중</text>
+  <text x="675" y="395" text-anchor="middle" font-size="11.5" fill="#4338ca">통합 추이 (그날의 환율로)</text>
+
+  <rect x="850" y="344" width="120" height="52" rx="10" fill="#ffffff" stroke="#d0d5dd" stroke-width="1.5"/>
+  <text x="910" y="366" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a">fx.py</text>
+  <text x="910" y="384" text-anchor="middle" font-size="11" fill="#666">KRW ↔ USD</text>
+  <line x1="850" y1="370" x2="824" y2="370" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ── 소비 ── -->
+  <path d="M325 408 L325 426 L500 426" fill="none" stroke="#8a8f98" stroke-width="1.5"/>
+  <path d="M675 408 L675 426 L500 426" fill="none" stroke="#8a8f98" stroke-width="1.5"/>
+  <path d="M500 426 L500 434 L225 434 L225 452" fill="none" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M500 426 L500 452" fill="none" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M500 426 L500 434 L775 434 L775 452" fill="none" stroke="#8a8f98" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="110" y="452" width="230" height="64" rx="10" fill="#ffffff" stroke="#d0d5dd" stroke-width="1.5"/>
+  <text x="225" y="477" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1a1a1a">CLI</text>
+  <text x="225" y="497" text-anchor="middle" font-size="11" fill="#666">analyze_portfolio.py</text>
+
+  <rect x="385" y="452" width="230" height="64" rx="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+  <text x="500" y="477" text-anchor="middle" font-size="13.5" font-weight="600" fill="#14532d">정적 HTML 리포트</text>
+  <text x="500" y="497" text-anchor="middle" font-size="11" fill="#15803d">서버 없이 더블클릭 (평소용)</text>
+
+  <rect x="660" y="452" width="230" height="64" rx="10" fill="#ffffff" stroke="#d0d5dd" stroke-width="1.5"/>
+  <text x="775" y="477" text-anchor="middle" font-size="13.5" font-weight="600" fill="#1a1a1a">Streamlit 뷰어</text>
+  <text x="775" y="497" text-anchor="middle" font-size="11" fill="#666">파고들 때</text>
+
+  <text x="500" y="543" text-anchor="middle" font-size="11.5" fill="#888">소스를 추가하려면 어댑터 하나를 만들고 레지스트리에 등록한다 — 그 위 계층은 손대지 않는다</text>
+</svg>
