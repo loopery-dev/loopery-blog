@@ -1,0 +1,32 @@
+---
+// 본문 중간의 "교훈"·"요점" 박스. 인용문(>)은 안내 메모용으로 남겨두고,
+// 꼭 짚고 넘어갈 결론은 이걸로 구분한다.
+interface Props {
+	title?: string;
+}
+
+const { title = '교훈' } = Astro.props;
+---
+
+<aside class="callout">
+	<strong>{title}</strong>
+	<div><slot /></div>
+</aside>
+
+<style>
+	.callout {
+		margin: 1.5em 0;
+		padding: 0.9em 1.2em;
+		border-radius: 6px;
+		background: #e8f0ee;
+		font-size: 0.9em;
+	}
+	strong {
+		display: block;
+		margin-bottom: 0.2em;
+		color: #2c5e4f;
+	}
+	.callout :global(p) {
+		margin: 0;
+	}
+</style>

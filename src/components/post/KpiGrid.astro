@@ -1,0 +1,59 @@
+---
+// 핵심 수치 카드 묶음. MDX 글에서 표 대신 "한눈에 보는 숫자"를 보여줄 때 쓴다.
+// tone: 'up'이면 빨강, 'down'이면 파랑 (국내 등락 표기 관례).
+interface Kpi {
+	label: string;
+	value: string;
+	sub?: string;
+	tone?: 'up' | 'down';
+}
+
+interface Props {
+	items: Kpi[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="kpis">
+	{
+		items.map((k) => (
+			<div class="kpi">
+				<span class="l">{k.label}</span>
+				<span class={`v ${k.tone ? `num-${k.tone}` : ''}`}>{k.value}</span>
+				{k.sub && <span class="s">{k.sub}</span>}
+			</div>
+		))
+	}
+</div>
+
+<style>
+	.kpis {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+		gap: 1px;
+		margin: 1.5em 0;
+		background: rgb(var(--gray-light));
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 8px;
+		overflow: hidden;
+	}
+	.kpi {
+		display: grid;
+		gap: 2px;
+		padding: 0.8em 1em;
+		background: #fff;
+	}
+	.l,
+	.s {
+		font-size: 0.65em;
+		line-height: 1.4;
+		color: rgb(var(--gray));
+	}
+	.v {
+		font-size: 1.25em;
+		font-weight: 700;
+		line-height: 1.3;
+		font-variant-numeric: tabular-nums;
+	}
+</style>

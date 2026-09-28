@@ -1,0 +1,68 @@
+---
+// 기간 안의 날짜를 한 칸씩 그리고, 기록이 있는 날만 칠한다.
+// start/end/recorded는 'YYYY-MM-DD' 문자열.
+interface Props {
+	start: string;
+	end: string;
+	recorded: string[];
+	caption?: string;
+}
+
+const { start, end, recorded, caption } = Astro.props;
+
+const days: string[] = [];
+for (let d = new Date(`${start}T00:00:00Z`); d <= new Date(`${end}T00:00:00Z`); d.setUTCDate(d.getUTCDate() + 1)) {
+	days.push(d.toISOString().slice(0, 10));
+}
+const on = new Set(recorded);
+const mid = days[Math.floor((days.length - 1) / 2)];
+const short = (s: string) => s.slice(5);
+---
+
+<figure class="daystrip">
+	<div
+		class="days"
+		style={`grid-template-columns:repeat(${days.length},1fr)`}
+		role="img"
+		aria-label={`${short(start)}부터 ${short(end)}까지 ${days.length}일 중 기록된 날 ${on.size}일`}
+	>
+		{days.map((d) => <div class:list={{ on: on.has(d) }} title={short(d)} />)}
+	</div>
+	<div class="axis"><span>{short(start)}</span><span>{short(mid)}</span><span>{short(end)}</span></div>
+	{caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+	.daystrip {
+		margin: 1.5em 0;
+		padding: 1em 1.2em;
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 8px;
+		background: #fff;
+	}
+	.days {
+		display: grid;
+		gap: 3px;
+	}
+	.days div {
+		aspect-ratio: 1;
+		border-radius: 2px;
+		background: rgb(var(--gray-light));
+	}
+	.days div.on {
+		background: var(--accent);
+	}
+	.axis {
+		display: flex;
+		justify-content: space-between;
+		margin-top: 0.4em;
+		font-size: 0.65em;
+		color: rgb(var(--gray));
+		font-variant-numeric: tabular-nums;
+	}
+	figcaption {
+		margin-top: 0.6em;
+		font-size: 0.7em;
+		color: rgb(var(--gray));
+	}
+</style>

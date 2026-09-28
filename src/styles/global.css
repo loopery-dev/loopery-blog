@@ -17,7 +17,9 @@
 		0 16px 32px rgba(var(--gray), 33%);
 }
 body {
-	font-family: var(--font-atkinson);
+	font-family:
+		'Pretendard Variable', Pretendard, var(--font-atkinson), -apple-system, 'Apple SD Gothic Neo',
+		'Malgun Gothic', sans-serif;
 	margin: 0;
 	padding: 0;
 	text-align: left;
@@ -25,6 +27,8 @@ body {
 	background-size: 100% 600px;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
+	/* 한국어가 단어 중간(예: "코/인")에서 줄바꿈되지 않게 한다. */
+	word-break: keep-all;
 	color: rgb(var(--gray-dark));
 	font-size: 20px;
 	line-height: 1.7;
@@ -73,9 +77,6 @@ a:hover {
 p {
 	margin-bottom: 1em;
 }
-.prose p {
-	margin-bottom: 2em;
-}
 textarea {
 	width: 100%;
 	font-size: 16px;
@@ -85,6 +86,29 @@ input {
 }
 table {
 	width: 100%;
+	border-collapse: collapse;
+	margin: 1.5em 0;
+	font-size: 0.85em;
+	line-height: 1.55;
+}
+th,
+td {
+	padding: 0.55em 0.75em;
+	text-align: left;
+	vertical-align: top;
+	border-bottom: 1px solid rgb(var(--gray-light));
+}
+th {
+	font-size: 0.9em;
+	font-weight: 700;
+	color: rgb(var(--gray));
+	border-bottom: 2px solid rgb(var(--gray-dark));
+}
+/* 마크다운 표의 `---:`(오른쪽 정렬) 열은 숫자 열이다. 자릿수를 맞춘다. */
+th[style*='right'],
+td[style*='right'] {
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
 }
 img {
 	max-width: 100%;
@@ -107,20 +131,61 @@ pre > code {
 	all: unset;
 	white-space: pre;
 }
-table {
-	display: block;
-	overflow-x: auto;
-	-webkit-overflow-scrolling: touch;
-}
 blockquote {
-	border-left: 4px solid var(--accent);
-	padding: 0 0 0 20px;
-	margin: 0;
-	font-size: 1.333em;
+	margin: 1.5em 0;
+	padding: 0.9em 1.2em;
+	border-left: 3px solid var(--accent);
+	border-radius: 0 6px 6px 0;
+	background: rgba(var(--gray-light), 55%);
+	font-size: 0.9em;
+}
+blockquote > :first-child {
+	margin-top: 0;
+}
+blockquote > :last-child {
+	margin-bottom: 0;
 }
 hr {
 	border: none;
 	border-top: 1px solid rgb(var(--gray-light));
+}
+.prose > hr {
+	margin: 2.5em 0;
+}
+/* 본문 제목: 위쪽 여백으로 섹션 경계를 만든다(기본값은 위 여백 0이라 문단에 붙었다). */
+.prose h2 {
+	margin: 2.4em 0 0.6em;
+}
+.prose h3 {
+	margin: 1.8em 0 0.5em;
+}
+.prose hr + h2,
+.prose .title + h2 {
+	margin-top: 0;
+}
+.prose h2 + h3 {
+	margin-top: 0.8em;
+}
+.prose p {
+	margin: 0 0 1.2em;
+}
+.prose li {
+	margin: 0.25em 0;
+}
+/* GFM 체크리스트: 불릿과 체크박스가 겹쳐 나오지 않게 */
+.contains-task-list {
+	list-style: none;
+	padding-left: 0.2em;
+}
+.task-list-item input {
+	margin: 0 0.5em 0 0;
+}
+/* 등락 표기 (국내 관례: 상승 빨강, 하락 파랑) */
+.num-up {
+	color: #c53a2f;
+}
+.num-down {
+	color: #2358a8;
 }
 @media (max-width: 720px) {
 	body {
@@ -128,6 +193,13 @@ hr {
 	}
 	main {
 		padding: 1em;
+	}
+	/* 좁은 화면에서만 표를 블록으로 바꿔 가로 스크롤을 허용한다.
+	   (넓은 화면에서도 block이면 표가 본문 폭을 채우지 못하고 내용 폭으로 쪼그라든다) */
+	table {
+		display: block;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
 	}
 }
 

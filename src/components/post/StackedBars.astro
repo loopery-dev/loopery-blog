@@ -1,0 +1,119 @@
+---
+// 100% 누적 막대그래프. 시점별 비중 변화를 한 줄씩 비교할 때 쓴다.
+// 좁은 조각에는 글자가 안 들어가므로 text를 비워두고 범례(legend)로 설명한다.
+interface Segment {
+	value: number; // 비중(%) — 한 행의 합이 100이 되게
+	color: string;
+	text?: string; // 막대 안에 쓸 글자
+	dark?: boolean; // 밝은 색 조각이면 true (글자를 어둡게)
+}
+
+interface Row {
+	label: string;
+	segments: Segment[];
+}
+
+interface Props {
+	rows: Row[];
+	legend: { label: string; color: string }[];
+	caption?: string;
+}
+
+const { rows, legend, caption } = Astro.props;
+---
+
+<figure class="stacked">
+	<div class="rows">
+		{
+			rows.map((r) => (
+				<div class="row">
+					<span class="lab">{r.label}</span>
+					<div class="bar" role="img" aria-label={`${r.label}: ${r.segments.map((s) => s.text ?? `${s.value}%`).join(', ')}`}>
+						{r.segments.map((s) => (
+							<span class:list={{ dark: s.dark }} style={`width:${s.value}%;background:${s.color}`}>
+								{s.text}
+							</span>
+						))}
+					</div>
+				</div>
+			))
+		}
+	</div>
+	<div class="legend">
+		{
+			legend.map((l) => (
+				<span>
+					<i style={`background:${l.color}`} />
+					{l.label}
+				</span>
+			))
+		}
+	</div>
+	{caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+	.stacked {
+		margin: 1.5em 0;
+		padding: 1em 1.2em;
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 8px;
+		background: #fff;
+	}
+	.rows {
+		display: grid;
+		gap: 0.6em;
+	}
+	.row {
+		display: grid;
+		grid-template-columns: 3.2em 1fr;
+		gap: 0.8em;
+		align-items: center;
+	}
+	.lab {
+		font-size: 0.7em;
+		color: rgb(var(--gray));
+		font-variant-numeric: tabular-nums;
+	}
+	.bar {
+		display: flex;
+		height: 1.6em;
+		border-radius: 3px;
+		overflow: hidden;
+	}
+	.bar span {
+		display: flex;
+		align-items: center;
+		padding-left: 0.5em;
+		font-size: 0.6em;
+		font-weight: 600;
+		color: #fff;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+	.bar span.dark {
+		color: rgb(var(--black));
+	}
+	.legend {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.3em 1em;
+		margin-top: 0.8em;
+		font-size: 0.7em;
+		color: rgb(var(--gray));
+	}
+	.legend i {
+		display: inline-block;
+		width: 0.7em;
+		height: 0.7em;
+		margin-right: 0.4em;
+		border-radius: 2px;
+		vertical-align: -0.05em;
+	}
+	figcaption {
+		margin-top: 0.6em;
+		font-size: 0.7em;
+		line-height: 1.5;
+		color: rgb(var(--gray));
+	}
+</style>
