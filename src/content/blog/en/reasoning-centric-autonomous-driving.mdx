@@ -7,6 +7,8 @@ tags: ["Autonomous Driving", "VLA", "NVIDIA", "Physical AI"]
 draft: false
 ---
 
+import Callout from '../../../components/post/Callout.astro';
+
 ## Introduction
 
 Just a few years ago, autonomous driving AI was a black box: "the camera sees it, the neural network turns the wheel." It was impressive when it worked, but nobody could explain why it made a given decision. That's changing. A growing share of research is now pushing models to first **reason in language about "why" before they turn the wheel**. This is called **reasoning-centric autonomous driving**.
@@ -26,6 +28,13 @@ Feed sensor input into a neural network and get a driving trajectory straight ou
 **Generation 3: Reasoning-centric autonomous driving VLA (Reasoning VLA)**
 
 This generation elevates causal language reasoning from a side feature to the **functional core** of control. Because the model reasons about "why" first, it can respond causally to novel situations, run counterfactual reasoning ("what if that car hadn't been there?"), and produce explanations a human can actually follow. The model that represents this generation is NVIDIA's **Alpamayo-R1** (the next post takes a deep dive into its internals).
+
+<Callout>
+	What separates the three generations isn't performance, it's **where the explanation lives.** In the
+	first, the explanation sat in interfaces humans designed; in the second it vanished; in the third it
+	was put back inside the model. The premise of this shift is that handling the long tail takes reasons,
+	not rules.
+</Callout>
 
 ## What is a VLA?
 

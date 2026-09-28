@@ -7,6 +7,8 @@ tags: ["Automation", "Obsidian", "Claude Code", "Publishing Pipeline", "Astro"]
 draft: false
 ---
 
+import Callout from '../../../components/post/Callout.astro';
+
 ## Introduction
 
 I didn't type most of the posts on this blog myself. A note dropped haphazardly into `raw/inbox/` in my Obsidian vault gets picked up by an AI agent (Claude Code), turned into a structured wiki entry, and the best of those entries get converted into a post here and published. Until now this has just been "something that happens automatically" — but recently, while actually processing a personal-finance note through the whole thing, I had a reason to walk through the entire flow start to finish. This post documents that pipeline itself — a bit of a meta post, in other words.
@@ -44,7 +46,7 @@ A separate, dedicated publishing step takes over from here, targeting this Astro
 
 After running this pipeline a few times, posts from noticeably different domains started showing up on the same blog. That's what led to building a separate category taxonomy for post types.
 
-- A single source of truth holds each category's slug, label, icon, and description; there are currently five (AI Agent Automation, Algorithmic Trading, Physical AI & Autonomous Driving, **Knowledge Auto-Publishing Pipeline**, and Personal Finance & Investing).
+- A single source of truth holds each category's slug, label, icon, and description; there are currently five (AI Agent Automation, Algorithmic Trading, Tech Company Analysis, **Knowledge Auto-Publishing Pipeline**, and Personal Finance & Investing).
 - The content schema's `category` field is a required value pulled straight from that list, so a new post can't skip assigning one.
 - Post cards and detail pages get a clickable category badge, and each category also gets its own listing page.
 
@@ -61,6 +63,13 @@ Requesting cleanup on a "comparing five tax-advantaged accounts" note sitting in
 One note produced six wiki nodes, one of which became a blog post, and along the way the blog's own structure (categories) gained a new piece too.
 
 ## Closing thoughts
+
+<Callout>
+	An automation pipeline's reliability comes from **state design**, not step count. This one uses only
+	two pieces of state — whether the source moved to archive, and whether the note carries a publish
+	flag. Both mean "already handled," which is why running it repeatedly never picks the same target
+	twice. Idempotency here comes from a file location and a flag rather than from dedicated logic.
+</Callout>
 
 The pipeline comes down to two things: **narrowing human involvement to exactly two decisions — which candidate to publish, and whether to deploy** — and **using two state flags (archiving, and the publish flag) to prevent duplicate processing.** Organizing notes, writing posts, and deploying are each, individually, kind of a hassle — but chaining all three into one flow means "just drop the note in and the rest follows" is actually true now. This very post was made that way, too.
 

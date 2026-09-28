@@ -7,6 +7,9 @@ tags: ["Tesla", "Physical AI", "Autonomous Driving", "Energy Storage"]
 draft: false
 ---
 
+import KpiGrid from '../../../components/post/KpiGrid.astro';
+import Callout from '../../../components/post/Callout.astro';
+
 ## Introduction
 
 If you look at Tesla as just "a company that's good at making electric cars," you'll miss at least half of what's actually happening. After going through the 2025 Tesla Impact Report (Extended Version), what stood out was that Tesla's real identity is **a Physical AI platform company with mobility, energy, robotics, and AI vertically integrated into one**. This post looks at how those four pillars push each other forward, and why that structure matters from both an investor's and an engineer's point of view.
@@ -21,7 +24,18 @@ These four aren't separate business units running in parallel — they're locked
 4. → transplants it as embodied intelligence into **robotics** (Tesla Optimus)
 5. → flows into **unmanned automated manufacturing** (Unboxed Manufacturing), which cuts costs on both the mobility and energy sides again (→ looping back to energy at step 1)
 
-Cost and data accumulated at one pillar cut costs at the next, and the results loop back around to the first pillar. Let's unpack why that's a big deal.
+Cost and data accumulated at one pillar cut costs at the next, and the results loop back around to the first pillar.
+
+<KpiGrid
+	items={[
+		{ label: 'Cumulative FSD driving data', value: '11B miles', sub: 'a 9M-vehicle fleet' },
+		{ label: 'FSD crash rate', value: '8x lower', sub: 'vs. an average driver', tone: 'down' },
+		{ label: 'Megapack deployed', value: '46GWh+', sub: '2025 · +90% YoY', tone: 'up' },
+		{ label: 'Battery capacity retained', value: '80%', sub: 'after 200k miles' },
+	]}
+/>
+
+Let's unpack why that's a big deal.
 
 ### 1. The mobility revolution: from ownership to usage
 
@@ -48,6 +62,12 @@ Optimus directly inherits FSD's vision neural network technology, and gets deplo
 
 2. **Proof of the battery-longevity story**
    Fleet data across 9 million vehicles confirms battery capacity holds at 80% even past 200,000 miles (roughly 15 years of driving). That's a direct, data-backed rebuttal to long-standing concerns about EV resale value and reliability.
+
+<Callout>
+	Fleet scale is itself the rebuttal. Two hundred thousand miles of data gathered across nine million
+	vehicles is not something any lab test substitutes for. **The real output of vertical integration
+	isn't component cost savings — it's evidence competitors don't have.**
+</Callout>
 
 3. **Accelerating regulatory and global expansion**
    FSD approvals expanded into Asia (South Korea, China) in 2025, and are set to expand into several European countries by 2026. There's real potential for autonomous-driving software revenue (FSD subscriptions/licensing) to grow into a much larger share of the business going forward.

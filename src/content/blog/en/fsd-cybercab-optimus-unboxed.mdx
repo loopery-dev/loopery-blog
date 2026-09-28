@@ -7,6 +7,9 @@ tags: ["Tesla", "Cybercab", "Robotics", "Manufacturing Innovation"]
 draft: false
 ---
 
+import KpiGrid from '../../../components/post/KpiGrid.astro';
+import Callout from '../../../components/post/Callout.astro';
+
 ## Introduction
 
 In the previous post ([Tesla, the Company Profile](/en/blog/tesla/)), I broke Tesla down into four pillars: mobility, energy, robotics, and infrastructure. This post digs deeper into one of the most interesting threads in that story: **how a single neural network (FSD) migrates beyond the car and into a robot's body.** We'll cover the robotaxi Cybercab, the humanoid Optimus, and the Unboxed manufacturing process that dramatically lowered the production cost of both.
@@ -16,6 +19,15 @@ In the previous post ([Tesla, the Company Profile](/en/blog/tesla/)), I broke Te
 Every part of this story starts with **FSD**. It's the vision-based, end-to-end (E2E) autonomous-driving software running in Tesla vehicles, handling perception, decision, and control all at once using just eight surround cameras — no expensive lidar, no high-precision maps.
 
 The scale is unusual. It processes over a million pixels per millisecond across a 360-degree view around the vehicle, and keeps training on more than **11 billion miles** of real-world driving data gathered from over 9 million vehicles worldwide. The payoff shows up in the safety numbers: with FSD (Supervised) engaged, drivers see 8x fewer serious crashes, 7x fewer minor crashes, and 6x fewer road-departure crashes versus the US average. Support expanded to South Korea, China, Australia, and New Zealand in 2025, with major European markets to follow in 2026.
+
+<KpiGrid
+	items={[
+		{ label: 'Cumulative real-world data', value: '11B+ miles', sub: 'across 9M+ vehicles' },
+		{ label: 'Cybercab efficiency', value: '6.1 mi/kWh', sub: 'Model Y AWD is 4.3', tone: 'up' },
+		{ label: 'Factory footprint', value: '40–50% smaller', sub: 'Unboxed process', tone: 'down' },
+		{ label: 'Manufacturing cost', value: '~50%', sub: 'of the conventional process', tone: 'down' },
+	]}
+/>
 
 This same vision neural network and AI compute stack is the shared raw material behind the two products below.
 
@@ -62,6 +74,13 @@ The payoff is concrete: because nobody has to work inside a cramped body shell a
 
 ## Closing thoughts
 
-FSD → Cybercab / Optimus → Unboxed manufacturing isn't three separate projects — it's one cost-reduction loop. FSD becomes the brain for both cars and robots, eliminating the need to develop separate sensor stacks, and Unboxed manufacturing builds the body that houses that brain far more cheaply. It's more accurate to say this isn't a car company building robots — it's a company reusing intelligence and manufacturing capability it has already proven, in a different form factor.
+FSD → Cybercab / Optimus → Unboxed manufacturing isn't three separate projects — it's one cost-reduction loop. FSD becomes the brain for both cars and robots, eliminating the need to develop separate sensor stacks, and Unboxed manufacturing builds the body that houses that brain far more cheaply.
+
+<Callout>
+	This isn't a car company building robots. **It's a company reusing intelligence and manufacturing
+	capability it has already proven, in a different form factor.** Which is why the marginal cost of a
+	new product is lower here than at a competitor — Optimus didn't develop a new sensor stack, and
+	Cybercab didn't build a paint shop.
+</Callout>
 
 *This post is adapted from Tesla robotics and manufacturing notes I keep in my personal wiki.*

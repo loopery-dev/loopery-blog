@@ -7,6 +7,9 @@ tags: ["Tesla", "EV", "Physical AI", "Robotics", "Energy Storage"]
 draft: false
 ---
 
+import KpiGrid from '../../../components/post/KpiGrid.astro';
+import Callout from '../../../components/post/Callout.astro';
+
 ## Introduction
 
 Calling Tesla "a company that makes good electric cars" is only half true. Since its founding in 2003, the mission was originally "to accelerate the world's transition to sustainable energy" — but what Tesla is actually doing today goes well beyond that. The company's current stated mission is to build a "world of amazing abundance" by combining AI, autonomous driving, and robotics.
@@ -58,6 +61,17 @@ Charging infrastructure is also fully under Tesla's own control. The global Supe
 
 ## 2025 by the numbers
 
+<KpiGrid
+	items={[
+		{ label: 'Serious crashes on FSD', value: '8x fewer', sub: 'vs. US national average', tone: 'down' },
+		{ label: 'Cumulative driving data', value: '11B+ miles', sub: 'across 9M+ vehicles' },
+		{ label: 'Battery capacity retained', value: '80%', sub: 'after 200k miles · ~15 years' },
+		{ label: 'Megapack deployed', value: '46GWh+', sub: '2025 · +90% YoY', tone: 'up' },
+		{ label: 'CO2e emissions avoided', value: '37M tons', sub: 'in 2025' },
+		{ label: 'Supercharger uptime', value: '99.95%+', sub: 'V4 cabinets rolled out' },
+	]}
+/>
+
 - **Safety**: With FSD (Supervised) engaged, drivers see 8x fewer serious crashes, 7x fewer minor crashes, and 6x fewer road-departure crashes versus the US national average.
 - **Battery life**: Model 3/Y batteries retain 80% of original capacity even after 200,000 miles (roughly 320,000 km, about 15 years of driving) — about 20% degradation.
 - **Environmental impact**: Roughly 37 million tonnes of CO2e avoided in 2025 alone (equivalent to about 90 billion miles driven by internal combustion vehicles), with an average lifecycle reduction of 32–52 tonnes of CO2e per vehicle.
@@ -65,6 +79,14 @@ Charging infrastructure is also fully under Tesla's own control. The global Supe
 
 ## Closing thoughts
 
-The easiest way to understand Tesla is to set aside the "electric car company" frame for a moment. Driving data accumulated in mobility becomes the brain for robotics (Optimus); manufacturing innovation (Unboxed) cuts costs for both mobility and energy; and the energy business (Megapack) helps unblock the AI infrastructure boom. The four pillars keep pushing each other forward — which is exactly why more people are starting to read this company not as an automaker, but as a player in the Physical AI industry.
+The easiest way to understand Tesla is to set aside the "electric car company" frame for a moment. Driving data accumulated in mobility becomes the brain for robotics (Optimus); manufacturing innovation (Unboxed) cuts costs for both mobility and energy; and the energy business (Megapack) helps unblock the AI infrastructure boom. The four pillars keep pushing each other forward.
+
+<Callout>
+	Read the four pillars as a list of business units and it looks like sprawl; read them as a closed
+	loop where data and cost circulate and it looks like vertical integration. The test that separates
+	the two is **whether what accumulates in one pillar cuts cost in the next and comes back around.**
+	Which is why this company should be re-read not as an automaker but as a player in the Physical AI
+	industry.
+</Callout>
 
 *This post is adapted from a Tesla entity note I keep in my personal wiki.*

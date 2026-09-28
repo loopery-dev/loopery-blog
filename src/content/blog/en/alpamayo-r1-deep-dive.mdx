@@ -7,6 +7,9 @@ tags: ["Alpamayo-R1", "NVIDIA", "VLA", "Autonomous Driving", "Reinforcement Lear
 draft: false
 ---
 
+import KpiGrid from '../../../components/post/KpiGrid.astro';
+import Callout from '../../../components/post/Callout.astro';
+
 ## Introduction
 
 In the previous post ([Why Autonomous Driving AI Started to 'Reason'](/en/blog/reasoning-centric-autonomous-driving/)), I talked about autonomous driving shifting to a third-generation "reasoning-centric VLA" paradigm. This post takes apart the model that actually implements that paradigm: **Alpamayo-R1 (AR1)**, the autonomous-driving-specific Vision-Language-Action model NVIDIA unveiled at CES 2026.
@@ -59,7 +62,7 @@ The **Flow-Matching Trajectory Decoder** takes a different approach. Instead of 
 The results are dramatic.
 
 | Metric | Autoregressive discrete-token decoding | Flow-matching decoder |
-| :--- | :--- | :--- |
+| :--- | ---: | ---: |
 | Inference latency | 222ms (127 tokens, sequential) | **8.75ms (5 steps)** |
 | Ride comfort (acceleration smoothness) | 44.05% | **97.38%** |
 | AlpaSim closed-loop score | 0.59 ± 0.17 | **1.27 ± 0.34** |
@@ -77,7 +80,14 @@ To fix this, the team added post-training reinforcement learning based on GRPO (
 - **Reasoning-action consistency reward**: the trajectory is converted into meta-actions (accelerate/decelerate/steer) and rule-checked against the intent stated in the text
 - **Low-level physical safety reward**: incorporates deviation from the expert path, collisions, and abrupt jerk
 
-One striking result came out of this: **optimizing the reasoning-quality reward alone actually made things more dangerous.** The reasoning score climbed to 4.5, but agreement with the actual trajectory fell from 0.62 to 0.53, and error increased — polished-sounding but disconnected, hallucinated reasoning. Only when all three rewards were combined did the close-encounter rate drop to its best level, from 6.9% to **3.7%**. The empirical lesson: growing reasoning ability has to be bundled with consistency and safety rewards, or it backfires.
+One striking result came out of this: **optimizing the reasoning-quality reward alone actually made things more dangerous.** The reasoning score climbed to 4.5, but agreement with the actual trajectory fell from 0.62 to 0.53, and error increased — polished-sounding but disconnected, hallucinated reasoning. Only when all three rewards were combined did the close-encounter rate drop to its best level, from 6.9% to **3.7%**.
+
+<Callout>
+	**Reasoning ability and real-world safety do not automatically travel together.** Reward a model
+	only for explaining well and it gets better only at explaining — leaving the behavior behind. This
+	is about as clean a demonstration as you'll find of "what you measure is what improves" inside
+	reward design. A reasoning reward has to be bundled with consistency and safety rewards.
+</Callout>
 
 ## 5. Validation: AlpaSim
 
@@ -89,8 +99,19 @@ The key metrics are the close-encounter/contact rate, the off-road rate, and the
 
 Here's the final benchmark for Alpamayo-R1 with all five pieces combined.
 
+<KpiGrid
+	items={[
+		{ label: 'Trajectory decode latency', value: '8.75ms', sub: '222ms autoregressive → 25x', tone: 'down' },
+		{ label: 'AlpaSim contact rate', value: '17% → 4%', sub: 'up to 76% lower', tone: 'down' },
+		{ label: 'Ride comfort', value: '97.38%', sub: 'autoregressive: 44.05%', tone: 'up' },
+		{ label: 'LingoQA accuracy', value: '66.2%', sub: 'GPT-4V 59.6% · zero-shot', tone: 'up' },
+		{ label: 'Causal validity score', value: '+132.8%', sub: 'vs. free-form CoT', tone: 'up' },
+		{ label: 'Onboard end-to-end latency', value: '99ms', sub: 'full CoC + trajectory · real time' },
+	]}
+/>
+
 | Metric | Baseline | Alpamayo-R1 (0.5B / 10B) |
-| :--- | :--- | :--- |
+| :--- | ---: | ---: |
 | Open-loop minADE6 @ 6.4s | 0.994m | **0.868m (12% better)** |
 | AlpaSim contact rate | 17.0% | **11.0% / 4.0% (up to 76% lower)** |
 | AlpaSim driving score | 0.38 | **0.50 / 0.72** |

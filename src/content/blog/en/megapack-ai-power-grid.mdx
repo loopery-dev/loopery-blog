@@ -7,6 +7,9 @@ tags: ["Tesla", "Megapack", "Energy Storage", "AI Infrastructure"]
 draft: false
 ---
 
+import KpiGrid from '../../../components/post/KpiGrid.astro';
+import Callout from '../../../components/post/Callout.astro';
+
 ## Introduction
 
 If you had to name one hidden winner of the AI boom, it might not be a flashy robot or a self-driving car — it might be a **battery company**. Tesla's large-scale battery energy storage product, **Megapack**, is quietly unblocking the surge in power demand coming from AI data centers. This post looks at why it's getting so much attention right now.
@@ -14,6 +17,15 @@ If you had to name one hidden winner of the AI boom, it might not be a flashy ro
 ## 2025 results: a business that grew quietly
 
 Megapack is a utility- and commercial-scale battery energy storage system (BESS). Its job is to smooth out the intermittency of renewable energy, stabilize the grid, and displace fossil-fuel generation. The 2025 numbers alone tell the growth story.
+
+<KpiGrid
+	items={[
+		{ label: 'Annual ESS deployed', value: '46GWh+', sub: '+90% YoY or better', tone: 'up' },
+		{ label: 'Projects in operation', value: '2,000+', sub: 'across 50+ countries' },
+		{ label: 'Powerwall installed', value: '1M+ units', sub: 'as of September 2025', tone: 'up' },
+		{ label: 'Distributed battery output', value: '6.7GW', sub: 'operated as a VPP' },
+	]}
+/>
 
 - Global energy storage system (ESS) deployments exceeded **46 GWh** for the year — up **more than 90%** year over year
 - Running in **over 2,000** industrial energy projects across **more than 50 countries**
@@ -24,6 +36,13 @@ Megapack is a utility- and commercial-scale battery energy storage system (BESS)
 The US power grid is built for the single highest-demand hour of the year. The catch is that under normal conditions, only about half of that capacity actually gets used — the rest sits idle, waiting for a peak that only shows up a handful of days a year. Expanding that idle capacity would mean billions of dollars in new transmission and distribution infrastructure.
 
 Megapack's role is straightforward: store surplus power and discharge it during peak hours (peak shaving), avoiding the need for that massive grid buildout in the first place.
+
+<Callout>
+	The grid's bottleneck isn't generating capacity, it's **peak-handling capacity.** Rather than
+	expanding plant that sits half idle for the sake of a few peak days a year, shift demand along the
+	time axis and the same plant serves more. What a battery really sells is not power — it's
+	**moving power through time.**
+</Callout>
 
 ## A new variable: AI data centers
 
