@@ -5,7 +5,7 @@
 export const CATEGORY_SLUGS = [
 	'ai-automation',
 	'algo-trading',
-	'physical-ai',
+	'tech-investing',
 	'publishing-pipeline',
 	'personal-finance',
 ] as const;
@@ -39,12 +39,12 @@ export const CATEGORIES: CategoryMeta[] = [
 		desc_en: 'Designing, backtesting, and validating crypto and stock auto-trading bots.',
 	},
 	{
-		slug: 'physical-ai',
-		label: 'Physical AI & 자율주행',
-		icon: '🧠',
-		desc: 'Tesla, NVIDIA 등 자율주행·로보틱스 기술 트렌드를 위키로 정리해 풀어냅니다.',
-		label_en: 'Physical AI & Autonomous Driving',
-		desc_en: 'Tesla, NVIDIA, and the wider autonomous driving / robotics trends, distilled from my wiki.',
+		slug: 'tech-investing',
+		label: '기술기업 분석',
+		icon: '📊',
+		desc: 'Tesla, NVIDIA, Palantir 등 AI·자율주행·엔터프라이즈 기술 기업을 투자와 기술 양쪽 관점에서 분석합니다.',
+		label_en: 'Tech Company Analysis',
+		desc_en: 'Tesla, NVIDIA, Palantir, and other AI / autonomous driving / enterprise tech companies, analyzed from both an investment and an engineering angle.',
 	},
 	{
 		slug: 'publishing-pipeline',

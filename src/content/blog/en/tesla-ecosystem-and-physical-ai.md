@@ -2,7 +2,7 @@
 title: "Why Tesla Isn't a 'Car Company' — The Shift to a Physical AI Platform"
 description: "Drawing on the 2025 Tesla Impact Report, this piece maps out how mobility, energy, robotics, and AI lock together into a single flywheel, and what you miss by seeing Tesla only as an EV company."
 pubDate: 2026-09-03
-category: "physical-ai"
+category: "tech-investing"
 tags: ["Tesla", "Physical AI", "Autonomous Driving", "Energy Storage"]
 draft: false
 ---

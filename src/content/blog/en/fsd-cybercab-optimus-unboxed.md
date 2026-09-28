@@ -2,7 +2,7 @@
 title: "The Robots That Inherited FSD's Brain — Cybercab and Optimus"
 description: "How Tesla's FSD neural network gets transplanted into a robotaxi (Cybercab) and a humanoid (Optimus), and the Unboxed manufacturing innovation that made both of them cheap enough to build."
 pubDate: 2026-09-03
-category: "physical-ai"
+category: "tech-investing"
 tags: ["Tesla", "Cybercab", "Robotics", "Manufacturing Innovation"]
 draft: false
 ---

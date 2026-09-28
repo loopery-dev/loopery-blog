@@ -1,0 +1,39 @@
+<!doctype html>
+<!--
+  Static fallback for the physical-ai → tech-investing category slug rename (2026-09).
+
+  The Vercel routes generated from astro.config.mjs `redirects` only match the
+  path without a trailing slash. This file covers the trailing-slash form (the
+  one the sitemap used to advertise) in case Vercel does not normalize it before
+  route matching. Clean this up if the category slug changes again.
+-->
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Moved — Tech Company Analysis</title>
+		<link rel="canonical" href="https://loopery.dev/en/blog/category/tech-investing/" />
+		<meta name="robots" content="noindex, follow" />
+		<meta http-equiv="refresh" content="0; url=/en/blog/category/tech-investing/" />
+		<script>
+			window.location.replace('/en/blog/category/tech-investing/');
+		</script>
+		<style>
+			body {
+				margin: 0;
+				min-height: 100vh;
+				display: grid;
+				place-items: center;
+				font-family: system-ui, sans-serif;
+				line-height: 1.6;
+				text-align: center;
+				padding: 1.5rem;
+			}
+		</style>
+	</head>
+	<body>
+		<p>
+			This category was renamed to <strong>Tech Company Analysis</strong>.<br />
+			<a href="/en/blog/category/tech-investing/">Go to /en/blog/category/tech-investing/</a>
+		</p>
+	</body>
+</html>

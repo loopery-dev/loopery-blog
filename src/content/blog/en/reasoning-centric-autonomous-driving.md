@@ -2,7 +2,7 @@
 title: "Why Autonomous Driving AI Started to 'Reason'"
 description: "Tracing the shift from modular pipelines through end-to-end driving to 'reasoning-centric autonomous driving,' and why NVIDIA sits at the center of this shift."
 pubDate: 2026-09-03
-category: "physical-ai"
+category: "tech-investing"
 tags: ["Autonomous Driving", "VLA", "NVIDIA", "Physical AI"]
 draft: false
 ---

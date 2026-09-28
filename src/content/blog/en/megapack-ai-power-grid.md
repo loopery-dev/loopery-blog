@@ -2,7 +2,7 @@
 title: "Megapack, the Quiet Winner of the AI-Era Power Grid"
 description: "How Tesla's large-scale battery energy storage system, Megapack, is quietly unblocking the power-demand surge driven by AI data centers."
 pubDate: 2026-09-03
-category: "physical-ai"
+category: "tech-investing"
 tags: ["Tesla", "Megapack", "Energy Storage", "AI Infrastructure"]
 draft: false
 ---

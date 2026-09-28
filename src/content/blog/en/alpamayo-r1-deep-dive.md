@@ -2,7 +2,7 @@
 title: "Dissecting Alpamayo-R1: From Causal Reasoning to an 8.75ms Trajectory"
 description: "A step-by-step breakdown of how NVIDIA's Alpamayo-R1 stitches together a causal-reasoning dataset, a real-time trajectory decoder, and reinforcement-learning alignment."
 pubDate: 2026-09-03
-category: "physical-ai"
+category: "tech-investing"
 tags: ["Alpamayo-R1", "NVIDIA", "VLA", "Autonomous Driving", "Reinforcement Learning"]
 draft: false
 ---

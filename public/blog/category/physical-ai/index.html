@@ -1,0 +1,39 @@
+<!doctype html>
+<!--
+  카테고리 슬러그 physical-ai → tech-investing 변경(2026-09)에 대한 정적 폴백.
+
+  astro.config.mjs의 redirects가 만드는 Vercel 라우트는 트레일링 슬래시가 없는
+  경로만 완전 일치로 잡는다. 슬래시가 붙은 이 경로(sitemap이 쓰던 정식 형태)로
+  들어온 요청을 Vercel이 정규화해주지 않는 경우를 대비한 파일이다.
+  카테고리 슬러그를 또 바꾸면 이 파일도 같이 정리할 것.
+-->
+<html lang="ko">
+	<head>
+		<meta charset="utf-8" />
+		<title>이동되었습니다 — 기술기업 분석</title>
+		<link rel="canonical" href="https://loopery.dev/blog/category/tech-investing/" />
+		<meta name="robots" content="noindex, follow" />
+		<meta http-equiv="refresh" content="0; url=/blog/category/tech-investing/" />
+		<script>
+			window.location.replace('/blog/category/tech-investing/');
+		</script>
+		<style>
+			body {
+				margin: 0;
+				min-height: 100vh;
+				display: grid;
+				place-items: center;
+				font-family: system-ui, sans-serif;
+				line-height: 1.6;
+				text-align: center;
+				padding: 1.5rem;
+			}
+		</style>
+	</head>
+	<body>
+		<p>
+			이 카테고리는 <strong>기술기업 분석</strong>으로 이름이 바뀌었습니다.<br />
+			<a href="/blog/category/tech-investing/">/blog/category/tech-investing/ 으로 이동</a>
+		</p>
+	</body>
+</html>

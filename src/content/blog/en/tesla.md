@@ -2,7 +2,7 @@
 title: "Tesla, the Company Profile — Not an EV Maker, But Four Businesses in One"
 description: "Tesla broken down into four interlocking pillars — mobility, energy, robotics, and AI infrastructure — with a look at how 2025's results back it up."
 pubDate: 2026-09-03
-category: "physical-ai"
+category: "tech-investing"
 tags: ["Tesla", "EV", "Physical AI", "Robotics", "Energy Storage"]
 draft: false
 ---
