@@ -1,0 +1,83 @@
+---
+title: "Turning a Whole YouTube Channel Into a Wiki — Bugs From Building a Transcript Scraper"
+description: "I wanted every video from a favorite automation channel, transcripts included, sitting in my Obsidian wiki. Here are the four bugs I hit trying to run it for free, and the IP-block scare that turned out to be my network."
+pubDate: 2026-09-12
+category: "ai-automation"
+tags: ["Claude Code", "YouTube Transcripts", "Obsidian", "Web Scraping", "Python"]
+draft: false
+---
+
+import Callout from '../../../components/post/Callout.astro';
+
+## Introduction
+
+There's an AI automation YouTube channel I watch regularly. As the back catalog grew, I kept finding myself hunting for "which video was that in again?", so I decided to scrape the channel wholesale — transcripts included — into an Obsidian wiki. I built the pipeline in a terminal with Claude Code: walk one channel via RSS or the Data API to find videos, fetch transcripts, and write them out as wiki notes. This post records that process, especially the bugs that came from insisting on running it for free, and the network block I ran into at the end.
+
+## Design: not one channel, but "several channels by topic"
+
+I first built it around a single channel. But I later wanted to manage several channels by interest area, so I changed it to read an array from `channels.json` — channel ID, name, and domain — and iterate over the whole list. Notes accumulate under `save_path/domain_name/`, split by domain, and I added a domain column to the DB schema so state can be filtered per channel and per domain. If one channel fails, it moves on to the next, so running many channels at once means one error doesn't halt everything.
+
+## Running it without API costs
+
+Originally, after fetching a transcript it called the Claude API to auto-generate a summary per video. Then I thought: why issue a separate API key and pay for it when I'm already inside a Claude Code session? So I added a `SKIP_SUMMARY` option — in that mode the script only fetches and stores the raw transcript, and **the summarizing and wiki organizing is handled directly by the Claude Code session I'm already in.** With no separate API calls, transcript collection itself runs entirely free.
+
+The "backfill" feature that pulls a channel's entire history also originally required a YouTube Data API key. I added a path that uses `yt-dlp`'s channel listing to fetch the full video list (around 200 in testing) without an API key. That method doesn't return publish dates, but it does return durations, so filtering out shorts is still possible.
+
+## The four bugs I ran into
+
+| # | Symptom | Cause | Severity |
+|---|---|---|:---:|
+| 1 | Config value filled with comment text | Empty value + inline comment | Low |
+| 2 | Fallback failed silently | `yt-dlp` not on PATH without venv activation | Medium |
+| 3 | Korean titles saved in English | Auto-translation on channel listing | Medium |
+| 4 | Blocked videos permanently excluded | Temporary block recorded as "no transcript" | **High** |
+
+### 1. An empty value plus an inline comment corrupts the value
+
+Writing `API_KEY=  # this key is optional` in `.env` — **an inline comment on a line with an empty value** — made the environment loader read the comment as the value. Lines with an actual value strip comments fine; this only happened with the "empty value + comment" combination. The result was that a setting which should have been an empty string became the comment text itself, so the API call using it returned a 400. The fix was simple: when leaving a value empty, move the comment onto its own line.
+
+### 2. Running a venv script without activating loses the fallback tool
+
+This project falls back to `yt-dlp` when the transcript API is blocked. But because I was running `.venv/Scripts/python.exe` directly without activating the virtualenv, the `yt-dlp` executable wasn't on PATH, so the fallback was failing silently. Instead of looking for the executable by name, I changed it to **invoke the module with the currently running Python interpreter** (`python -m yt_dlp`), which works regardless of PATH.
+
+### 3. Fetching the full channel list auto-translates the titles
+
+Using `yt-dlp` to pull the channel's entire video list returned every originally-Korean title auto-translated into English. Only after adding an option to pin the language explicitly did I get the titles in their original form. Left alone, every wiki note title would have been saved in translated English.
+
+### 4. Failing to distinguish "blocked" from "never existed" (the worst one)
+
+The most painful bug. When YouTube temporarily blocked transcript requests (a 429 from too many requests), I was recording that failure as the permanent state **"this video has no transcript at all."** The problem is that these two states are handled in completely opposite ways — "no transcript" is permanently excluded from retries, while "temporary error" needs to remain retryable. So once you hit a block, those videos would never be retried even after the block lifted.
+
+The fix was to make the transcript-fetching function return the reason for failure alongside the result. Genuinely missing transcripts (videos with captions disabled, say) are now distinguished from temporary blocks and errors, with the latter kept in a retryable state. Fortunately I caught this before any real deployment, so cleanup meant returning a dozen or so wrongly-recorded entries to pending.
+
+<Callout>
+	Don't flatten failures into a single state. **"Permanently impossible" and "impossible right now but
+	possibly fine later"** demand opposite follow-up: the first should be excluded from retries, the
+	second must be preserved. Record them as the same value and a transient outage hardens into
+	permanent data loss.
+</Callout>
+
+## And then the real block
+
+Even after fixing every bug, requests kept getting refused, so I retried a few times at short intervals. Still blocked. At first I assumed the script's request pattern had been flagged — but then **I clicked the transcript button on the same video in a browser and no transcript appeared there either.** That confirmed it wasn't a script-only problem but a restriction applied more broadly at the **network (IP) level**.
+
+To be sure, I switched networks via a phone hotspot and opened the same video again. The transcript loaded normally. That pinned it on my home network's IP. No need for a proxy — I concluded it would resolve by changing networks or simply waiting, and set it down for a while.
+
+<Callout>
+	When something keeps getting blocked, don't start by suspecting your own code — first check whether
+	**the same symptom appears through a different path.** If the browser also fails, it isn't the
+	script; if switching networks fixes it, it's the IP. Those two checks narrow the cause faster than
+	hours spent staring at code.
+</Callout>
+
+## The principles so far
+
+- Don't record failure as one lumped state. "Permanently impossible" and "impossible now but possibly fine later" must be stored distinctly.
+- Don't build a separate API call for something a tool you're already using (here, the Claude Code session) can do.
+- If something keeps getting blocked, check whether other paths — a browser, say — show the same symptom before blaming your code. It narrows the scope (script vs. network) much faster.
+
+## Closing
+
+I didn't build some grand crawler. I just wanted a favorite channel, transcripts and all, in a searchable personal wiki. Pursuing that simple goal for free and reliably took me through environment-variable parsing, virtualenv PATH resolution, failure-state design, and network block diagnosis — another reminder that even a small scraper hides a surprising amount of detail.
+
+*This post is adapted from the ytwiki pipeline build log I keep in my personal wiki.*

@@ -1,0 +1,60 @@
+---
+title: "Why I Built My Stock and Crypto Analyzer in Python, Not C++"
+description: "My day job is writing verification frameworks in C/C++. My side project — a portfolio analyzer — is Python from end to end. When the scarce resource is verification speed rather than runtime performance, the language choice flips."
+pubDate: 2026-09-10
+category: "algo-trading"
+tags: ["Python", "C++", "Architecture", "Toss Securities Open API", "ADR"]
+draft: false
+---
+
+import Callout from '../../../components/post/Callout.astro';
+
+## Introduction
+
+At work I write verification frameworks in C/C++. The systems are safety-critical, so performance and memory control are non-negotiable, and I am used to leaning on the compiler for type safety. And yet the side project that analyzes my stock and crypto portfolio (`toss-portfolio-analyzer`) is Python from the first line to the last. Before waving that away as "Python is just more convenient," it is worth being precise about what this project actually is.
+
+## This isn't a product, it's content
+
+I did consider whether there was real demand for an app that stitched Upbit and Toss Securities together into one unified stock-and-crypto dashboard. The conclusion was clear: **weak as a product, excellent as material.**
+
+MyData operators like Banksalad and the Toss asset tab already own that space, and an individual bolting on one API at a time is structurally outmatched on coverage. On top of that, it is hard to imagine many people pasting brokerage API keys into an app built by a stranger.
+
+So I changed direction. **Don't build something to sell; build something to publish.** If the deliverable is the process — wiring two different APIs into one view you can actually trust, written up and open-sourced — every one of those barriers disappears.
+
+And that single decision propagated straight into the language choice. When the goal is not "a commercially deployed app with high uptime" but "assemble fast, verify fast, and turn the process into writing fast," the binding constraint is not execution speed. It is **verification speed**.
+
+## What that looked like in practice
+
+The places Python paid off while building `toss-portfolio-analyzer` weren't abstract. Every one of them was something I actually hit.
+
+- **Speed of learning the API schema by hand.** The Toss Securities API documentation is incomplete, so I worked by dumping raw JSON with `requests`, reading the structure on the spot, and only then writing the parsing logic. Running in the interpreter and looking at the result, with no compile step, was overwhelmingly faster than a C++ workflow where you start by declaring header files.
+- **Speed of fixing bugs.** Building this project I hit five real bugs: the accountNo/accountSeq header problem, a currency-key casing mismatch, a SQL binding count error, and a date filter that was also excluding the fallback candidates. Every one was solved by printing the error on the spot, changing one line, and re-running. The shorter the debug cycle, the cheaper it is to ask "is this hypothesis right?"
+- **A web viewer in hours, not days.** Streamlit alone gave me a dashboard with pie charts, tables, and a daily trend chart. In C++ that would have meant bolting on an entire frontend stack.
+- **The data ecosystem.** Turning a holdings response into a DataFrame with pandas and visualizing it directly with plotly is a path already proven for financial data. Writing that by hand in C++ would have spent half the project building data-processing infrastructure.
+
+<Callout title="The point">
+	Choosing a language is not about which language is better. It is about **which resource is most
+	expensive in this particular project.** At work, runtime performance and safety are expensive, so
+	C++ is right. Here, the time it takes to confirm a hypothesis is expensive, so Python was right.
+	The same person using different languages is not an inconsistency.
+</Callout>
+
+Conversely, the reasons I use C++ at work — performance, memory control, safety-critical requirements — apply to exactly none of this project. Pulling one account and rendering it as a table does not need millisecond optimization.
+
+If anything, it is normal for this project's scope to keep moving. It started as a CLI, became Streamlit, then became a static HTML report. Being able to change direction cheaply mattered more than anything else, and a heavier language would have charged me for every one of those turns.
+
+## The legal boundary has to stay thin for the same reason
+
+This project draws a hard line at read-only. Moving into buy/sell recommendations or price targets risks crossing into regulated investment-advisory territory in Korea. Even when I publish returns, I use them as verification examples without absolute amounts, and I mask ticker names where needed. **This post is a record, not investment advice.**
+
+That boundary is really an extension of the same principle: a scope that is narrow and light is easy to redirect, and easy to abandon. A heavily built product and a heavily promised piece of content are both hard to walk back.
+
+## How I record these decisions: ADRs
+
+So that decisions like this don't decay into "wait, why did I build it this way?", I keep a `docs/` directory in the repo and accumulate **ADRs (Architecture Decision Records)**. One short file per decision — context, the option chosen, the options rejected and why, and the consequences. This post is effectively the first of those: **"why Python and not C++."**
+
+The plan is to split static design intent (ADRs in `docs/`) from dynamic runtime state (last sync time, whether the verification gate passed, whether it was a dry run) which lives in a status tab inside the app. Mixing the two means nobody reads the docs and the screen gets cluttered. And that status tab is exactly where this blog's tagline — *building loops you can trust enough to walk away from* — actually lands. To walk away, you need a window that tells you it is safe to.
+
+## Closing
+
+There is nothing strange about using different languages for your day job and your side project. If performance is the criterion, C++ is right. If verification speed is the criterion, Python is right. This project was the latter, and so far that call has held up. The next ADR will probably be about why I separated the core logic from the UI.

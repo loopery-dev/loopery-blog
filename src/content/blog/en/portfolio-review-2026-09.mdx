@@ -1,0 +1,266 @@
+---
+title: "Three Weeks of Snapshots — Reading the 'Why' Behind the Numbers"
+description: "On Upbit I cleared out altcoins to concentrate in BTC; on Toss Securities I withdrew spare cash to spend. Yet the report logged a realized loss as an improvement and a withdrawal as a loss. Three weeks of portfolio changes, with the reasons behind the figures."
+pubDate: 2026-09-28
+category: "personal-finance"
+tags: ["Portfolio", "Asset Management", "Bitcoin", "QLD", "Review"]
+draft: false
+---
+
+import KpiGrid from '../../../components/post/KpiGrid.astro';
+import StackedBars from '../../../components/post/StackedBars.astro';
+import DayStrip from '../../../components/post/DayStrip.astro';
+import Callout from '../../../components/post/Callout.astro';
+
+export const C = {
+	btc: '#D9892B',
+	eth: '#5A6BB0',
+	sol: '#3E9C88',
+	xrp: '#8A9591',
+	qld: '#2C5E4F',
+	safe: '#A9C4BA',
+};
+
+About three weeks of snapshots have accumulated in
+[`loopery-portfolio`](/en/blog/loopery-portfolio-merge/), the personal asset analyzer I built to see
+Upbit (crypto) and Toss Securities (US stocks) on one screen. In the meantime I also reworked the
+portfolio itself.
+
+This isn't automated trading yet — **I'm still buying and selling by hand.** So this post covers two
+things at once: **what I changed and why**, and **how those changes registered in the report's
+numbers**.
+
+Writing it up, the two looked quite different. A good decision can show up as a bad number, and a
+loss can show up as an improved one.
+
+> These are personal finances, so all amounts are omitted — only **percentages and quantity changes**.
+> Up/down colors follow the Korean convention: up is <span class="num-up">red</span>, down is
+> <span class="num-down">blue</span>.
+
+## How the report is structured
+
+The change report splits into four parts.
+
+| Section | Question it answers | Data used |
+|---|---|---|
+| 1. Net worth trend | Up or down overall, and what's the crypto share? | `snapshots` + per-day FX (`fx_rates`) |
+| 2. Upbit changes | What did I buy and sell, and what came of it? | `position_snapshots` + fills (`trades`) + daily closes |
+| 3. Toss changes | What positions changed, and how against the benchmark (SPY)? | `position_snapshots` + SPY scenario |
+| 4. Recording coverage | How far can I trust the trend? | Dates recorded |
+
+## 1. Net worth: almost flat
+
+<KpiGrid
+	items={[
+		{ label: 'Net worth (KRW-converted)', value: '−1.4%', sub: '09-07 → 09-28', tone: 'down' },
+		{ label: 'Upbit (KRW)', value: '+11.3%', sub: '09-07 → 09-28', tone: 'up' },
+		{ label: 'Toss Securities (USD)', value: '−3.7%', sub: 'includes withdrawal', tone: 'down' },
+		{ label: 'Crypto share', value: '19.4%', sub: 'from 17.2%' },
+	]}
+/>
+
+The two accounts moved in opposite directions. But the minus on Toss is not an investment loss — I
+**took money out** to spend where it was needed (explained in section 3). Adjust for that and the
+actual performance is better than the net worth figure suggests.
+
+Conversion used **the FX rate recorded on each day**. Convert the past at today's rate and past
+assets look wholesale different by however much the rate moved.
+
+## 2. Upbit: putting the weight on Bitcoin
+
+### Direction: cut altcoins, push the BTC share as high as possible
+
+For crypto I decided to **raise the Bitcoin share as much as possible to keep the portfolio stable**.
+Altcoins are far more volatile than BTC. Holding small amounts spread across several coins gives
+little diversification benefit and mostly just adds shake.
+
+| Date | Trade |
+|---|---|
+| 09-16 | Small BTC buy with KRW |
+| 09-23 | **Sold all SOL** → received BTC (BTC market) |
+| 09-26 | **Sold all XRP** → received BTC (BTC market) |
+| 09-27 | Small BTC buy with KRW |
+
+<StackedBars
+	rows={[
+		{
+			label: '09-12',
+			segments: [
+				{ value: 47.3, color: C.btc, text: 'BTC 47%' },
+				{ value: 28.1, color: C.eth, text: 'ETH 28%' },
+				{ value: 8.1, color: C.sol },
+				{ value: 16.5, color: C.xrp, text: 'XRP 17%' },
+			],
+		},
+		{
+			label: '09-28',
+			segments: [
+				{ value: 74.2, color: C.btc, text: 'BTC 74%' },
+				{ value: 25.8, color: C.eth, text: 'ETH 26%' },
+			],
+		},
+	]}
+	legend={[
+		{ label: 'BTC', color: C.btc },
+		{ label: 'ETH', color: C.eth },
+		{ label: 'SOL 8%', color: C.sol },
+		{ label: 'XRP', color: C.xrp },
+	]}
+	caption="Position weights by Upbit market value. Holdings went from four coins (BTC, ETH, SOL, XRP) to two (BTC, ETH), and BTC quantity grew 65%."
+/>
+
+I swapped the altcoins **directly into BTC on the BTC market** rather than converting to won first.
+Routing through won means paying fees twice and accepting whatever the price does in between. I plan
+to keep raising the BTC share.
+
+### Watch out in the report: why unrealized P&L "improved"
+
+Looking only at Upbit's unrealized P&L rate, things improved a lot.
+
+| | 09-12 | 09-28 |
+|---|---:|---:|
+| Unrealized P&L rate | <span class="num-down">−18.2%</span> | <span class="num-down">**−6.4%**</span> |
+
+BTC's price over the same period was <span class="num-up">+7.4%</span>. That alone doesn't produce a
+12pp improvement. The rest is **losses dropping out of the unrealized calculation because they were
+realized.**
+
+| Coin sold | P&L rate at sale (estimated, KRW-converted) |
+|---|---:|
+| XRP | <span class="num-down">**−25.5%**</span> |
+| SOL | <span class="num-up">+3.6%</span> |
+
+The XRP loss was a loss that had already happened. Having decided to move into BTC, I accepted it and
+closed the position. But on a screen showing only unrealized P&L, that loss looks like it
+**disappeared**. Running the numbers, **roughly 43% of the unrealized P&L improvement is this
+effect.** The remaining 57% or so is the price actually rising.
+
+On top of that, selling on the BTC market means proceeds are recorded **in BTC**. So they don't show
+up in the existing KRW realized-P&L tally either. To see the won-denominated result you have to
+re-convert at that day's BTC close in won (which is how the table above was estimated).
+
+<Callout>
+	Clear out altcoins on the BTC market and the won-denominated loss may not appear on any screen.
+	"Unrealized P&L improved" can also mean "I realized a loss."
+</Callout>
+
+## 3. Toss Securities: spending the spare cash
+
+### What I did, and why
+
+| Position | Change | Return |
+|---|---|---:|
+| QLD (2x Nasdaq) | Essentially unchanged | <span class="num-down">−0.6%</span> → <span class="num-up">**+6.1%**</span> |
+| SGOV (ultra-short Treasuries) | **Sold entirely** (~10% of the account) | — |
+| SPYM (S&P 500) | **New small position** (~0.7% of the account) | — |
+
+SGOV was the place I parked **spare cash**. Being ultra-short Treasuries, the price barely moves and
+it pays interest, so pulling from it any time costs nothing. This time I withdrew that spare cash
+**to cover a Claude Code subscription**. Part of it moved into SPYM.
+
+I didn't touch QLD, and over three weeks it came up to +6.1%.
+
+### Target weights: QLD 90% / safe assets 10%
+
+Going forward the plan for the Toss account is QLD (growth) at 90% and safe assets — short-term
+Treasuries (SGOV) plus stable equity (SPYM) — at 10%.
+
+<StackedBars
+	rows={[
+		{
+			label: '09-12',
+			segments: [
+				{ value: 90.1, color: C.qld, text: 'QLD 90%' },
+				{ value: 9.9, color: C.safe, text: '10%', dark: true },
+			],
+		},
+		{
+			label: '09-28',
+			segments: [
+				{ value: 99.3, color: C.qld, text: 'QLD 99%' },
+				{ value: 0.7, color: C.safe },
+			],
+		},
+		{
+			label: 'Target',
+			segments: [
+				{ value: 90, color: C.qld, text: 'QLD 90%' },
+				{ value: 10, color: C.safe, text: '10%', dark: true },
+			],
+		},
+	]}
+	legend={[
+		{ label: 'QLD (growth)', color: C.qld },
+		{ label: 'Short-term Treasuries (SGOV) + stable equity (SPYM)', color: C.safe },
+	]}
+	caption="Weights by Toss Securities market value. Before the spare cash was spent (09-12), the split was almost exactly the target."
+/>
+
+Right now, just after spending the spare cash, the QLD concentration is heavy. I intend to **refill
+short-term Treasuries a little at a time** as opportunities come, restoring the 10% safe allocation.
+QLD is 2x leveraged and falls hard in a down market. Simply having buffer capital you can draw on
+then is what makes it possible to hold.
+
+### Watch out in the report: a withdrawal looks like a loss
+
+The report logged the Toss account at <span class="num-down">**−3.7%**</span>. It also shows a
+comparison reading "about 4pp behind putting everything in SPY." Neither number came from managing
+the account badly. **They came from taking money out.**
+
+This analyzer compares the SPY scenario against purchase amount. It doesn't separate deposits and
+withdrawals, so money leaving gets computed as a loss of the same size. On top of that, the Toss
+holdings API doesn't return cash, so the cash balance always reads zero.
+
+<Callout>
+	To see a return, you have to **separate cash flows from investment performance.** Otherwise money
+	you withdrew in order to spend it looks like an investment failure.
+</Callout>
+
+## 4. Recording coverage: the Chuseok gap
+
+<DayStrip
+	start="2026-09-06"
+	end="2026-09-28"
+	recorded={['2026-09-06', '2026-09-07', '2026-09-08', '2026-09-09', '2026-09-12', '2026-09-18', '2026-09-28']}
+	caption="Days with a surviving snapshot (filled cells): 7 out of 23."
+/>
+
+Between the Chuseok holidays and a busy stretch at work, there were many days I didn't leave the
+computer on. I do have a scheduled task that takes a snapshot automatically each morning. But that
+task can wake a sleeping PC — it **cannot wake a PC that is off.** Neither Upbit nor Toss Securities
+has an API that returns past market values, so that period can't be backfilled and stays blank.
+
+Fortunately **it didn't affect any trading decisions**, because I'm still buying and selling by hand
+rather than running automation. Snapshots are a record for looking back later; the trades themselves
+are all preserved in Upbit's fill history. The Upbit analysis in this post is based on fills, so it's
+accurate. The only thing blurred is **the daily trend graph**.
+
+## Summary
+
+| | What I did | How it registered in the report |
+|---|---|---|
+| Upbit | Cleared altcoins to **expand the BTC share** (BTC 74%) | Unrealized P&L −18% → −6% (~43% of it the effect of realizing the XRP loss) |
+| Toss | Spent spare cash (SGOV) **on a Claude Code subscription** | −3.7%, behind SPY (withdrawal effect) |
+| Trend | Recording gap over the Chuseok holidays | Only 7 of 23 days recorded |
+
+The portfolio direction is simple.
+
+- **Crypto:** concentrate in Bitcoin to lower volatility
+- **Stocks:** chase growth with QLD at 90%, keep short-term Treasuries and SPYM at 10% as buffer
+
+And what I learned this time is that report numbers have to be read alongside **why they came out that
+way**. A good decision (spending spare cash) can register as a loss, and realizing a loss can register
+as an improvement.
+
+## Next up
+
+**Investing**
+
+- [ ] Refill the Toss account's safe assets (SGOV, SPYM) back toward 10%, a little at a time
+- [ ] Keep expanding the crypto BTC share
+
+**Analyzer**
+
+- [ ] Display cash flows separately from investment returns
+- [ ] Convert BTC-market sales into won-denominated realized P&L for display
+- [ ] Mark days with no recording explicitly in the report
